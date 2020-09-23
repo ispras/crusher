@@ -1,0 +1,32 @@
+<Peach>
+
+    <DataModel name="FuzzDataModel">
+
+	<Block name="RecordHeader" >
+
+		<Blob name="ContentType" valueType="hex" length="1" value="16" mutable="false" />
+		<Blob name="ProtocolVersion" valueType="hex" length="2" value="03 01" mutable="false" />
+
+		<Blob name="HandshakeMessageLength" valueType="hex" length="2" value="00 14" mutable="false" />
+
+	</Block>
+
+	<Block name="HandshakeMessage" >
+
+		<Blob name="HandshakeMessageType" valueType="hex" length="1" value="01" mutable="false" />
+
+		<Number name="ClientHelloLength" size="24" signed="false" endian="big" mutable="false" >
+                        <Relation type="size" of="ClientHello" />
+                </Number>
+
+		<Block name="ClientHello" >
+
+			<Blob name="Data" valueType="hex" />
+
+		</Block>
+
+	</Block>
+
+    </DataModel>
+
+</Peach>
