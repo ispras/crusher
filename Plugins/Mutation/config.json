@@ -1,0 +1,4 @@
+{
+  "mutation": ["duplicate_mutator"],
+  "run_after_mutation": ["duplicate_mutator"]
+}
