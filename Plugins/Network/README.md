@@ -1,4 +1,4 @@
-### Запуск инструмента Crusher с пользовательским модулем оправки данных
+### Запуск инструмента Crusher с пользовательским модулем отправки данных
 
 ```shell script
 bin_x86-64/fuzz_manager -i in -o out --python-network <путь до транспортного модуля> --ip 127.0.0.1 --port 8080 --delay 1000 -- /bin/example_network
