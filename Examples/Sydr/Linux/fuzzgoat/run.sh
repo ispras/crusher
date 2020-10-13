@@ -1,0 +1,1 @@
+./fuzzgoat fuzzgoat_input

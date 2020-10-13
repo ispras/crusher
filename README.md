@@ -13,6 +13,11 @@
 
 ## Sydr
 
-Sydr - инструмент динамической символьной интерпретации на базе [Triton](https://github.com/JonathanSalwan/Triton) и [DynamoRIO](https://github.com/DynamoRIO/dynamorio). Инструмент позволяет получить наборы входных данных для инвертирования условных переходов, которые встертились по ходу выполнения программы.
+Sydr - инструмент динамической символьной интерпретации на базе
+[Triton](https://github.com/JonathanSalwan/Triton) и
+[DynamoRIO](https://github.com/DynamoRIO/dynamorio). Инструмент позволяет
+получить наборы входных данных для инвертирования условных переходов, которые
+встретились по ходу выполнения программы.
 
-Примеры запуска на реальных программах можно найти в репозитории [sydr-benchmark](https://github.com/ispras/sydr-benchmark).
+Примеры запуска на реальных программах можно найти в директории
+[Examples/Sydr](Examples/Sydr).
