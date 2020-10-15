@@ -65,7 +65,7 @@ def initialization():
 Однако, использование `data` не является обязательным.
 
 ### 2. Добавление плагина в `Crusher`
-Скопируйте плагин мутации (например, `duplicate_mutator.py`) в директорию с пользовательскими мутациями `Crusher`:
+Скопируйте плагин мутации (например, [duplicate_mutator.py](duplicate_mutator.py)) в директорию с пользовательскими мутациями `Crusher`:
 ```shell script
 cp duplicate_mutator.py /path/to/crusher/bin_x86-64/Plugins/mutation
 ```
@@ -88,11 +88,11 @@ cp duplicate_mutator.py /path/to/crusher/bin_x86-64/Plugins/mutation
 ```
 
 ### 4. Запуск `Crusher`
-Пример запуска `Crusher` с пользовательской мутацией, где `config.json` - конфиг-файл:
+Пример запуска `Crusher` с пользовательской мутацией, где [config.json](config.json) - конфиг-файл:
 ```shell script
 /path/to/crusher/bin_x86-64/fuzz_manager --start 4 -i in -o out --config-file config.json -- ./test @@
 ```
 
-Пример плагина мутации - файл `duplicate_mutator.py`.
+Пример плагина мутации - [duplicate_mutator.py](duplicate_mutator.py).
 
-Пример конфиг-файла - файл `config.json`.
+Пример конфиг-файла - файл [config.json](config.json).
