@@ -66,7 +66,7 @@ def send_data(self, data=None):
 
 В данной директории размещены примеры пользовательских плагинов передачи данных, которые можно использовать в Crusher:
 
- * NetworkTcpClient.py
- * NetworkTcpServer.py
- * NetworkUdpClient.py
- * NetworkUdpServer.py
+ * [NetworkTcpClient.py](NetworkTcpClient.py)
+ * [NetworkTcpServer.py](NetworkTcpServer.py)
+ * [NetworkUdpClient.py](NetworkUdpClient.py)
+ * [NetworkUdpServer.py](NetworkUdpServer.py)

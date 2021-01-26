@@ -60,7 +60,7 @@ def post_processing(self, data=None):
 ```
 
 ### 3. Запуск `Crusher`
-Пример запуска `Crusher` с пользовательским скриптом пост-обработки, где `config.json` - конфиг-файл:
+Пример запуска `Crusher` с пользовательским скриптом пост-обработки, где [config.json](config.json) - конфиг-файл:
 ```shell script
 /path/to/crusher/bin_x86-64/fuzz_manager --start 4 -i in -o out --config-file config.json -- ./test @@
 ```
@@ -72,6 +72,6 @@ def post_processing(self, data=None):
 /path/to/crusher/bin_x86-64/fuzz_manager --start 4 -i in -o out --post-processing post-proc.py -- ./test @@
 ```
 
-Пример скрипта пост-обработки - файл `post-proc.py`.
+Пример скрипта пост-обработки - [post-proc.py](post-proc.py).
 
-Пример конфиг-файла - файл `config.json`.
+Пример конфиг-файла - файл [config.json](config.json).
