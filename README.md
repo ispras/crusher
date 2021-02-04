@@ -4,12 +4,12 @@
 
 ## Примеры запуска
 
-В директории [examples/Linux](examples/Linux) содержатся примеры фаззинга на `Linux`.
-Более подробно - см. [Examples/Linux/README.md](Examples/Linux/README.md)
+В директории [Examples/Crusher/Linux](Examples/Crusher/Linux) содержатся примеры фаззинга на `Linux`.
+Более подробно - см. [Examples/Crusher/Linux](Examples/Crusher/Linux)
 
 ## Пользовательские плагины
 В директории [Plugins](Plugins) содержатся примеры использования и написания пользовательских плагинов для инструмента `Crusher`, а также образцы плагинов.
-Более подробно - см. [Plugins/README.md](Plugins/README.md)
+Более подробно - см. [Plugins](Plugins)
 
 ## Sydr
 
