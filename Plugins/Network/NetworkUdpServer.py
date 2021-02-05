@@ -10,7 +10,7 @@ class PyNetwork(object):
     def __init__(self, ip, port, delay):
         self.ip = ip
         self.port = port
-        self.delay = float(delay) / 1000
+        self.delay = delay
 
     def send_data(self, data=None):
         if data is None:
