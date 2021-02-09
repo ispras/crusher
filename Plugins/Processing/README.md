@@ -92,3 +92,5 @@ def post_processing(self, data=None):
 Пример скрипта модуля processing - [processing.py](processing.py).
 
 Пример конфиг-файла - файл [config.json](config.json).
+
+keke
