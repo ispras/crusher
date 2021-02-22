@@ -1,0 +1,50 @@
+#Basic Image
+FROM ubuntu:20.04
+
+#Args for compliance of inner and outer uid and gid
+
+ARG cuid=1000
+ARG cgid=1000
+ARG cuidname=crusher
+ARG cgidname=crusher
+
+#Just a notes
+LABEL maintainer="DmitryJustDmitry@sinclit.ru"
+LABEL version="3.0"
+LABEL description="Boilerplate for crusher work in DynamoRIO mode"
+
+#Install system packages
+RUN apt update && apt install -y gcc clang llvm make sudo
+
+#Add group and user (like my HOST group and user)
+RUN groupadd -g $cgid $cgidname &&  useradd -m -u $cuid -g $cgidname -G sudo -s /usr/bin/bash $cuidname
+
+#Unpack Crusher
+ADD crusher.tar.gz /home/$cuidname
+
+#Compile Crusher Compilers
+ENV ISP_PATH /home/$cuidname/crusher/bin_x86-64
+WORKDIR /home/$cuidname/crusher/LLVMMode
+RUN make && make install
+
+#Getting inputs from HOST
+WORKDIR /home/$cuidname
+COPY in in/
+
+################### Add your target here
+#Set Timezone or get hang during the docker build...
+ENV TZ=Europe/Moscow
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+#Install Target for fuzzing
+RUN apt install -y postgresql
+USER $cuidname
+RUN /usr/lib/postgresql/12/bin/initdb -D /home/$cuidname/data
+
+###################
+
+#Start fuzzer in a container (change ownership for output folder)
+USER root
+ENV cuidname=$cuidname
+ENV cgidname=$cgidname
+CMD echo $cuidname && chown -R $cuidname:$cgidname /home/$cuidname/out && sudo -u $cuidname ./crusher/bin_x86-64/fuzz_manager -i in/ -o out/ -M 1 --libdislocator -F -I DynamoRioForkSrv -T stdin -t 1000 -m 10000 --no-inst-libs --start 1 --session $FUZZ_INSTANCE --no-eat -- /usr/lib/postgresql/12/bin/postgres --single -D /home/$cuidname/data postgres
