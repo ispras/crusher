@@ -9,7 +9,7 @@ ARG cuidname=crusher
 ARG cgidname=crusher
 
 #Just a notes
-LABEL maintainer="DmitryJustDmitry@fobos-nt.ru"
+LABEL maintainer="ponomarev@fobos-nt.ru"
 LABEL version="1.0"
 LABEL description="Boilerplate for crusher work in dyn inst mode"
 
