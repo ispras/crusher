@@ -44,7 +44,7 @@ RUN git clone --single-branch --branch REL_12_STABLE --depth 1 https://github.co
 WORKDIR /home/$cuidname/postgres
 
 #Configuring and compiling the Target for fuzzing
-RUN CC=/home/$cuidname/AFLplusplus/afl-clang-lto CXX=/home/$cuidname/AFLplusplus/afl-clang-lto++ AFL_USE_UBSAN=1 AFL_LLVM_LAF_ALL=1 ./configure --prefix /home/$cuidname/pgbuild
+RUN CC=/home/$cuidname/AFLplusplus/afl-clang-fast CXX=/home/$cuidname/AFLplusplus/afl-clang-fast++ AFL_USE_UBSAN=1 AFL_LLVM_LAF_ALL=1 ./configure --prefix /home/$cuidname/pgbuild
 RUN make -j10 && make install
 WORKDIR /home/$cuidname/
 
