@@ -38,10 +38,12 @@ rm -rf /var/work/experiments/cluster/out
 
 #### Команда запуска фаззинг-контейнера в режим контроля STDOUT для контроля в консоли того, что происходит в контейнере
 docker run --network host --name=fuzz -v /var/work/experiments/cluster/out:/home/$(id -un)/out -e "FUZZ_INSTANCE=fuzz" --privileged crusher_drio
+
 docker run --network host --name=fuzz -v /var/work/experiments/cluster/out:/home/$(id -un)/out -e "FUZZ_INSTANCE=fuzz" --privileged crusher_static
 
 #### Два варианта запуска в цикле N (N=5) контейнеров
 for i in $(seq 1 5); do docker run --network host --name=fuzz$i -v /var/work/experiments/cluster/out:/home/$(id -un)/out -e "FUZZ_INSTANCE=fuzz$i" -d --privileged crusher_drio; done
+
 for i in $(seq 1 5); do docker run --network host --name=fuzz$i -v /var/work/experiments/cluster/out:/home/$(id -un)/out -e "FUZZ_INSTANCE=fuzz$i" -d --privileged crusher_static; done
 
 #### Запуск EAT (Extra Analysis Tool) в отдельном контейнере в отдельном терминале screen
