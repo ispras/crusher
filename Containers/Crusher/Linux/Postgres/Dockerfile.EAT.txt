@@ -9,9 +9,9 @@ ARG cuidname=crusher
 ARG cgidname=crusher
 
 #Just a notes
-LABEL maintainer="DmitryJustDmitry@sinclit.ru"
-LABEL version="4.0"
-LABEL description="Boilerplate for crusher work in static mode"
+LABEL maintainer="ponomarev@sinclit.ru"
+LABEL version="1.0"
+LABEL description="Boilerplate for crusher EAT work"
 
 #Install system packages
 RUN apt update && apt install -y gcc clang llvm make sudo git
@@ -22,10 +22,11 @@ RUN groupadd -g $cgid $cgidname &&  useradd -m -u $cuid -g $cgidname -G sudo -s 
 #Unpack Crusher
 ADD crusher.tar.gz /home/$cuidname
 
-#Compile Crusher Compilers
-ENV ISP_PATH /home/$cuidname/crusher/bin_x86-64
-WORKDIR /home/$cuidname/crusher/LLVMMode
-RUN make && make install
+#Compile afl++ compilers
+WORKDIR /home/$cuidname
+RUN git clone https://github.com/AFLplusplus/AFLplusplus
+WORKDIR /home/$cuidname/AFLplusplus
+RUN make
 
 #Getting inputs from HOST
 WORKDIR /home/$cuidname
@@ -43,7 +44,7 @@ RUN git clone --single-branch --branch REL_12_STABLE --depth 1 https://github.co
 WORKDIR /home/$cuidname/postgres
 
 #Configuring and compiling the Target for fuzzing
-RUN CC=/home/$cuidname/crusher/bin_x86-64/isp-clang-fast CXX=/home/$cuidname/crusher/bin_x86-64/isp-clang-fast++ ISP_HARDER=1 ISP_USE_UBSAN=1 ISP_LLVM_LAF_ALL=1 ./configure --prefix /home/$cuidname/pgbuild
+RUN CC=/home/$cuidname/AFLplusplus/afl-clang-lto CXX=/home/$cuidname/AFLplusplus/afl-clang-lto++  AFL_USE_UBSAN=1 AFL_LLVM_LAF_ALL=1 ./configure --prefix /home/$cuidname/pgbuild
 RUN make -j10 && make install
 WORKDIR /home/$cuidname/
 
