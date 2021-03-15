@@ -2,7 +2,7 @@
 
 *Докерфайлы расчитаны на работу с использованием доступного по сети центра лицензирования Crusher (красный хасп)*
 
-## ПРЕДНАЗНАЧЕНИЕ ДОКЕРФАЙЛОВ
+### ПРЕДНАЗНАЧЕНИЕ ДОКЕРФАЙЛОВ
 
 `Dockerfile.DRIO.txt` - сборка и фаззинг в режиме динамического инструментирования
 
@@ -12,52 +12,52 @@
 
 `Dockerfile.EAT.txt` - контейнер для запуска процесса-анализатора EAT (Extra Analysis Tool) Crusher
 
-## КОМАНДЫ ПОДГОТОВКИ ОБРАЗОВ КОНТЕЙНЕРОВ
+### КОМАНДЫ ПОДГОТОВКИ ОБРАЗОВ КОНТЕЙНЕРОВ
 
 #### Команда подготовки образа для фаззинга в режиме динамического инструментирования.
 docker build --build-arg cuid=$(id -u) --build-arg cgid=$(id -g) --build-arg cuidname=$(id -un) --build-arg cgidname=$(id -gn) -t crusher_DRIO -f Dockerfile.DRIO.txt .
 
-### Команда подготовки образа для фаззинга в режиме статического инструментирования. Сборка с санитайзерами UBSAN и компиляторными оптимизациями LAF.
+#### Команда подготовки образа для фаззинга в режиме статического инструментирования. Сборка с санитайзерами UBSAN и компиляторными оптимизациями LAF.
 docker build --build-arg cuid=$(id -u) --build-arg cgid=$(id -g) --build-arg cuidname=$(id -un) --build-arg cgidname=$(id -gn) -t crusher_STATIC -f Dockerfile.STATIC.txt .
 
-### Команда подготовки образа для сбора покрытия в режиме статического инструментирования
+#### Команда подготовки образа для сбора покрытия в режиме статического инструментирования
 docker build --build-arg cuid=$(id -u) --build-arg cgid=$(id -g) --build-arg cuidname=$(id -un) --build-arg cgidname=$(id -gn) -t crusher_STATIC_COV -f Dockerfile.STATIC_COV.txt .
 
-### Команда подготовки образа для запуска EAT.
+#### Команда подготовки образа для запуска EAT.
 docker build --build-arg cuid=$(id -u) --build-arg cgid=$(id -g) --build-arg cuidname=$(id -un) --build-arg cgidname=$(id -gn) -t crusher_EAT -f Dockerfile.EAT.txt .
 
-## Команды управления контейнерами
+### Команды управления контейнерами
 
-### Удаление результатов предыдущих запусков
+#### Удаление результатов предыдущих запусков
 rm -rf /var/work/experiments/cluster/out
 
 *Это необходимый пункт, т.к. иначе каждый процесс fuzz_manager, видя уже имеющуюся директорию с результатами,
 будет требовать от пользователя подтвердить её удаление, что мешает автоматизированному запуску.*
 
-### Команда запуска фаззинг-контейнера в режим контроля STDOUT для контроля в консоли того, что происходит в контейнере
+#### Команда запуска фаззинг-контейнера в режим контроля STDOUT для контроля в консоли того, что происходит в контейнере
 docker run --network host --name=fuzz -v /var/work/experiments/cluster/out:/home/$(id -un)/out -e "FUZZ_INSTANCE=fuzz" --privileged crusher_DRIO
 docker run --network host --name=fuzz -v /var/work/experiments/cluster/out:/home/$(id -un)/out -e "FUZZ_INSTANCE=fuzz" --privileged crusher_STATIC
 
-### Два варианта запуска в цикле N (N=5) контейнеров
+#### Два варианта запуска в цикле N (N=5) контейнеров
 for i in $(seq 1 5); do docker run --network host --name=fuzz$i -v /var/work/experiments/cluster/out:/home/$(id -un)/out -e "FUZZ_INSTANCE=fuzz$i" -d --privileged crusher_DRIO; done
 for i in $(seq 1 5); do docker run --network host --name=fuzz$i -v /var/work/experiments/cluster/out:/home/$(id -un)/out -e "FUZZ_INSTANCE=fuzz$i" -d --privileged crusher_STATIC; done
 
-### Запуск EAT (Extra Analysis Tool) в отдельном контейнере в отдельном терминале screen
+#### Запуск EAT (Extra Analysis Tool) в отдельном контейнере в отдельном терминале screen
 screen -dmS EAT docker run --network host --rm --name=eat -v /var/work/experiments/cluster/out:/home/$(id -un)/out --privileged crusher_EAT
 
-### Уничтожение в цикле N (N=5) контейнеров (заодно чистится выходной каталог - !в реальной работе так делать не нужно!)
+#### Уничтожение в цикле N (N=5) контейнеров (заодно чистится выходной каталог - !в реальной работе так делать не нужно!)
 for i in $(seq 1 5); do docker kill fuzz$i ; docker rm fuzz$i ; done ; rm -rf out
 
-### Уничтожение контейнера с EAT
+#### Уничтожение контейнера с EAT
 docker kill eat && docker rm eat
 
-## ДИНАМИЧЕСКОЕ ОЗНАКОМЛЕНИЕ С РЕЗУЛЬТАТАМИ ФАЗЗИНГА (like afl-cov)
+### ДИНАМИЧЕСКОЕ ОЗНАКОМЛЕНИЕ С РЕЗУЛЬТАТАМИ ФАЗЗИНГА (like afl-cov)
 В специальном контейнере выполняется сборка цели с инструментацией под сбор покрытия, прогоняются сэмплы из каталога в котором сохраняется queue выбранного фаззера, формируется html-отчет, формируется текстовый отчет (текущий, при наличии предыдущего он сохраняется для выполнения сравнения через diff)
 
-### Команда запуска конвейера прогона сэмплов через сборку, адаптированную под подсчет покрытия
+#### Команда запуска конвейера прогона сэмплов через сборку, адаптированную под подсчет покрытия
 docker run --name=cov -v /var/work/experiments/cluster/out/fuzz1-MASTER_0/queue:/home/$(id -un)/in_stat -v /var/work/experiments/cluster/out_stat:/home/$(id -un)/out_stat -d --privileged crusher_STATIC_COV && docker wait cov && docker rm cov
 
-### Команда легковесного сравнения предыдущего и текущего текстовых отчетов
+#### Команда легковесного сравнения предыдущего и текущего текстовых отчетов
 diff --suppress-common-lines -y out_stat/coverage.txt out_stat/coverage_prev.txt
 
 *В результате выполнения команды можно быстро посмотреть в каких модулях достигнут прирост покрытия с момента прошлого подсчета покрытия*
