@@ -9,23 +9,15 @@ ARG cuidname=crusher
 ARG cgidname=crusher
 
 #Just a notes
-LABEL maintainer="DmitryJustDmitry@sinclit.ru"
-LABEL version="4.0"
-LABEL description="Boilerplate for crusher work in static mode"
+LABEL maintainer="ponomarev@fobos-nt.ru"
+LABEL version="1.0"
+LABEL description="Boilerplate for collecting coverage in stat inst mode"
 
 #Install system packages
 RUN apt update && apt install -y gcc clang llvm make sudo git aha lcov
 
 #Add group and user (like my HOST group and user)
 RUN groupadd -g $cgid $cgidname &&  useradd -m -u $cuid -g $cgidname -G sudo -s /usr/bin/bash $cuidname
-
-#Unpack Crusher
-ADD crusher.tar.gz /home/$cuidname
-
-#Compile Crusher Compilers
-ENV ISP_PATH /home/$cuidname/crusher/bin_x86-64
-WORKDIR /home/$cuidname/crusher/LLVMMode
-RUN make && make install
 
 #Configuring and compiling the Target for fuzzing
 ENV LLVM_PROFILE_FILE=/home/$cuidname/coverage/"code-%p.profraw"
@@ -56,7 +48,7 @@ RUN /home/$cuidname/pgbuild/bin/initdb -D /home/$cuidname/data
 #Getting inputs from HOST
 COPY in in/
 
-#Start fuzzer in a container (change ownership for output folder) 
+#Start coverage collecting in a container (change ownership for output folder) 
 USER root
 ENV cuidname=$cuidname
 ENV cgidname=$cgidname

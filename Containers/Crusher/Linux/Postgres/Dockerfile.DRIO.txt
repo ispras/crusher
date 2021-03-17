@@ -9,9 +9,9 @@ ARG cuidname=crusher
 ARG cgidname=crusher
 
 #Just a notes
-LABEL maintainer="DmitryJustDmitry@sinclit.ru"
-LABEL version="3.0"
-LABEL description="Boilerplate for crusher work in DynamoRIO mode"
+LABEL maintainer="ponomarev@fobos-nt.ru"
+LABEL version="1.0"
+LABEL description="Boilerplate for crusher work in dyn inst mode"
 
 #Install system packages
 RUN apt update && apt install -y gcc clang llvm make sudo
@@ -21,11 +21,6 @@ RUN groupadd -g $cgid $cgidname &&  useradd -m -u $cuid -g $cgidname -G sudo -s 
 
 #Unpack Crusher
 ADD crusher.tar.gz /home/$cuidname
-
-#Compile Crusher Compilers
-ENV ISP_PATH /home/$cuidname/crusher/bin_x86-64
-WORKDIR /home/$cuidname/crusher/LLVMMode
-RUN make && make install
 
 #Getting inputs from HOST
 WORKDIR /home/$cuidname
@@ -47,4 +42,4 @@ RUN /usr/lib/postgresql/12/bin/initdb -D /home/$cuidname/data
 USER root
 ENV cuidname=$cuidname
 ENV cgidname=$cgidname
-CMD echo $cuidname && chown -R $cuidname:$cgidname /home/$cuidname/out && sudo -u $cuidname ./crusher/bin_x86-64/fuzz_manager -i in/ -o out/ -M 1 --libdislocator -F -I DynamoRioForkSrv -T stdin -t 1000 -m 10000 --no-inst-libs --start 1 --session $FUZZ_INSTANCE --no-eat -- /usr/lib/postgresql/12/bin/postgres --single -D /home/$cuidname/data postgres
+CMD echo $cuidname && chown -R $cuidname:$cgidname /home/$cuidname/out && sudo -u $cuidname ./crusher/bin_x86-64/fuzz_manager -i in/ -o out/ -F -T stdin -t 1000 -m 10000 --no-inst-libs --start 1 --session $FUZZ_INSTANCE --eat-cores 0 --dse-cores 0 --dse-threads 0 -- /usr/lib/postgresql/12/bin/postgres --single -D /home/$cuidname/data postgres
