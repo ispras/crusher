@@ -14,7 +14,7 @@ RUN groupadd -g $cgid $cgidname &&  useradd -m -u $cuid -g $cgidname -G sudo -s 
 #Just a notes
 LABEL maintainer="ponomarev@fobos-nt.ru"
 LABEL version="1.0"
-LABEL description="Lesson 1. AFL++ and clang issues."
+LABEL description="FAQ 1. AFL++ and clang issues."
 
 #Set Timezone or get hang during the docker build...
 ENV TZ=Europe/Moscow
