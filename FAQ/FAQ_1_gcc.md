@@ -156,7 +156,7 @@ warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 При таких странных конфигурациях afl-cc компилятор, который вызывает нативный компилятор, дополняя его действия комплексом собственных пассов / инструментаций / вставок, может сойти с ума.
 
-Поэтому при возникновении проблем со сборкой рекомендуется использовать режим AFL_DEBUG=1 и убедиться, что вызывается именно тот реальный компилятор, который мы бы и хотели видеть, а не что-то неожиданное:
+Поэтому при возникновении проблем со сборкой рекомендуется использовать режим AFL_DEBUG=1 и убедиться, что вызывается именно тот реальный компилятор (обратите внимание на строку **'/usr/lib/llvm-12/bin/clang'**), который мы бы и хотели видеть, а не что-то неожиданное:
 
 ```root@f08907929ba9:/home/crusher/simple-cpp-projects# AFL_DEBUG=1 ../AFLplusplus/afl-cc bulls_cows.cpp -o binary```
 
@@ -173,8 +173,8 @@ afl-cc ++3.12c by Michal Zalewski, Laszlo Szekeres, Marc Heuse - mode: LLVM-PCGU
 [D] DEBUG: Trying ../AFLplusplus/afl-compiler-rt.o
 [D] DEBUG: rt=../AFLplusplus/afl-compiler-rt.o obj_path=../AFLplusplus
 [D] DEBUG: cd '/home/crusher/simple-cpp-projects';
-``` 
-**'/usr/lib/llvm-12/bin/clang'**  
+/usr/lib/llvm-12/bin/clang' '-Wno-unused-command-line-argument' '-Xclang' '-load' '-Xclang' '../AFLplusplus/SanitizerCoveragePCGUARD.so' 'bulls_cows.cpp' '-o' 'binary' '-g' '-O3' '-funroll-loops' '-D__AFL_HAVE_MANUAL_CONTROL=1' '-D__AFL_COMPILER=1' '-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION=1' '-D__AFL_FUZZ_INIT()=int
+```
 
-'-Wno-unused-command-line-argument' '-Xclang' '-load' '-Xclang' '../AFLplusplus/SanitizerCoveragePCGUARD.so' 'bulls_cows.cpp' '-o' 'binary' '-g' '-O3' '-funroll-loops' '-D__AFL_HAVE_MANUAL_CONTROL=1' '-D__AFL_COMPILER=1' '-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION=1' '-D__AFL_FUZZ_INIT()=int 
+
 
