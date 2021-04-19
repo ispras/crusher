@@ -174,8 +174,6 @@ afl-cc ++3.12c by Michal Zalewski, Laszlo Szekeres, Marc Heuse - mode: LLVM-PCGU
 [D] DEBUG: Trying ../AFLplusplus/afl-compiler-rt.o
 [D] DEBUG: rt=../AFLplusplus/afl-compiler-rt.o obj_path=../AFLplusplus
 [D] DEBUG: cd '/home/crusher/simple-cpp-projects'; 
-```
 **'/usr/lib/llvm-12/bin/clang'** 
-```
 '-Wno-unused-command-line-argument' '-Xclang' '-load' '-Xclang' '../AFLplusplus/SanitizerCoveragePCGUARD.so' 'bulls_cows.cpp' '-o' 'binary' '-g' '-O3' '-funroll-loops' '-D__AFL_HAVE_MANUAL_CONTROL=1' '-D__AFL_COMPILER=1' '-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION=1' '-D__AFL_FUZZ_INIT()=int __afl_sharedmem_fuzzing = 1;extern unsigned int *__afl_fuzz_len;extern unsigned char *__afl_fuzz_ptr;unsigned char __afl_fuzz_alt[1048576];unsigned char *__afl_fuzz_al
 ```
