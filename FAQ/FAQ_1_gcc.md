@@ -143,7 +143,7 @@ Info: Found constructor function _GLOBAL__sub_I_bulls_cows.cpp with prio 65535, 
 [+] Instrumented 33 locations with no collisions (non-hardened mode).
 ```
 
-Однако иногда вследствие комплекса различных действий с компиляторами в системе может что-то слететь. Как пример - кто-то поставил g++-компилятор для вызова при вызове clang++ (скорее всего это чья-то ошибка, а не злой умысел...). Проблему можно увидеть посмотрев на вывод команды --version - вроде бы clang, но версия gcc'шная указана. 
+Однако иногда вследствие комплекса различных действий с компиляторами в системе может что-то слететь. Как пример - кто-то поставил g++-компилятор для вызова при вызове clang++ (скорее всего это чья-то ошибка, а не злой умысел...). Проблему можно увидеть посмотрев на вывод команды --version - вроде бы clang, но версия gcc'шная **9.3.0** указана. 
 
 ```root@f08907929ba9:/home/crusher/simple-cpp-projects# update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/g++-9 110
 update-alternatives: using /usr/bin/g++-9 to provide /usr/bin/clang++ (clang++) in auto mode
