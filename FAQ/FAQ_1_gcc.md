@@ -148,9 +148,8 @@ Info: Found constructor function _GLOBAL__sub_I_bulls_cows.cpp with prio 65535, 
 ```root@f08907929ba9:/home/crusher/simple-cpp-projects# update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/g++-9 110
 update-alternatives: using /usr/bin/g++-9 to provide /usr/bin/clang++ (clang++) in auto mode
 root@f08907929ba9:/home/crusher/simple-cpp-projects# clang++ --version
-```
-**clang++ (Ubuntu 9.3.0-17ubuntu1~20.04) 9.3.0**
-```Copyright (C) 2019 Free Software Foundation, Inc.
+clang++ (Ubuntu 9.3.0-17ubuntu1~20.04) 9.3.0
+Copyright (C) 2019 Free Software Foundation, Inc.
 This is free software; see the source for copying conditions.  There is NO
 warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 ```
@@ -160,7 +159,7 @@ warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 Поэтому при возникновении проблем со сборкой рекомендуется использовать режим AFL_DEBUG=1 и убедиться, что вызывается именно тот реальный компилятор, который мы бы и хотели видеть, а не что-то неожиданное:
 
 ```root@f08907929ba9:/home/crusher/simple-cpp-projects#``` **AFL_DEBUG=1 ../AFLplusplus/afl-cc bulls_cows.cpp -o binary**
-```
+
 [D] DEBUG: Trying ../AFLplusplus/as
 [D] DEBUG: Trying ../AFLplusplus/SanitizerCoverageLTO.so
 [D] DEBUG: Trying ../AFLplusplus/cmplog-routines-pass.so
@@ -175,5 +174,5 @@ afl-cc ++3.12c by Michal Zalewski, Laszlo Szekeres, Marc Heuse - mode: LLVM-PCGU
 [D] DEBUG: rt=../AFLplusplus/afl-compiler-rt.o obj_path=../AFLplusplus
 [D] DEBUG: cd '/home/crusher/simple-cpp-projects'; 
 **'/usr/lib/llvm-12/bin/clang'** 
-'-Wno-unused-command-line-argument' '-Xclang' '-load' '-Xclang' '../AFLplusplus/SanitizerCoveragePCGUARD.so' 'bulls_cows.cpp' '-o' 'binary' '-g' '-O3' '-funroll-loops' '-D__AFL_HAVE_MANUAL_CONTROL=1' '-D__AFL_COMPILER=1' '-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION=1' '-D__AFL_FUZZ_INIT()=int __afl_sharedmem_fuzzing = 1;extern unsigned int *__afl_fuzz_len;extern unsigned char *__afl_fuzz_ptr;unsigned char __afl_fuzz_alt[1048576];unsigned char *__afl_fuzz_al
-```
+'-Wno-unused-command-line-argument' '-Xclang' '-load' '-Xclang' '../AFLplusplus/SanitizerCoveragePCGUARD.so' 'bulls_cows.cpp' '-o' 'binary' '-g' '-O3' '-funroll-loops' '-D__AFL_HAVE_MANUAL_CONTROL=1' '-D__AFL_COMPILER=1' '-DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION=1' '-D__AFL_FUZZ_INIT()=int 
+
