@@ -1,0 +1,39 @@
+#Basic Image
+FROM ubuntu:20.04
+
+#Args for compliance of inner and outer uid and gid
+
+ARG cuid=1000
+ARG cgid=1000
+ARG cuidname=crusher
+ARG cgidname=crusher
+
+#Add group and user (like my HOST group and user)
+RUN groupadd -g $cgid $cgidname &&  useradd -m -u $cuid -g $cgidname -G sudo -s /usr/bin/bash $cuidname
+
+#Just a notes
+LABEL maintainer="ponomarev@fobos-nt.ru"
+LABEL version="1.0"
+LABEL description="FAQ 1. AFL++ and clang issues."
+
+#Set Timezone or get hang during the docker build...
+ENV TZ=Europe/Moscow
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+#Install common system packages
+RUN apt update &&  apt-get install -y cmake  git make sudo wget build-essential python curl gcc
+
+#Clone repos
+WORKDIR /home/$cuidname
+RUN git clone https://github.com/AFLplusplus/AFLplusplus
+
+#Build AFL++
+WORKDIR /home/$cuidname/AFLplusplus
+RUN make -j4
+
+USER root
+
+#ENV cuidname=$cuidname
+#ENV cgidname=$cgidname
+
+CMD /bin/bash
