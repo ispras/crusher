@@ -42,4 +42,4 @@ RUN /usr/lib/postgresql/12/bin/initdb -D /home/$cuidname/data
 USER root
 ENV cuidname=$cuidname
 ENV cgidname=$cgidname
-CMD echo $cuidname && chown -R $cuidname:$cgidname /home/$cuidname/out && sudo -u $cuidname ./crusher/bin_x86-64/fuzz_manager -i in/ -o out/ -F -T stdin -t 1000 -m 10000 --no-inst-libs --start 1 --session $FUZZ_INSTANCE --eat-cores 0 --dse-cores 0 --dse-threads 0 -- /usr/lib/postgresql/12/bin/postgres --single -D /home/$cuidname/data postgres
+CMD echo $cuidname && chown -R $cuidname:$cgidname /home/$cuidname/out && sudo -u $cuidname ./crusher/bin_x86-64/fuzz_manager -i in/ -o out/ -F -T stdin -t 3000 -m 10000 --no-inst-libs --start 1 --session $FUZZ_INSTANCE --eat-cores 0 --dse-cores 0 --dse-threads 0 -- /usr/lib/postgresql/12/bin/postgres --single -D /home/$cuidname/data postgres

@@ -1,7 +1,7 @@
 {
   "fuzz_argv_options": {
     "options": {
-      "-w": ["str"]
+      "-w": "arg"
     }
   }
 }
