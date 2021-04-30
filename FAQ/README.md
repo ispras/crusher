@@ -31,3 +31,5 @@
 [Описание кейса](FAQ_2_static_lib.md)
 
 [Контейнер для экспериментов](Dockerfile_FAQ_2_static_lib.txt)
+
+#### 3. [Фаззинг и сбор покрытия для проекта на языке Rust](https://github.com/ispras/crusher/blob/master/FAQ/rust-fuzz-example/README.md)
