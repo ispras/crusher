@@ -147,8 +147,7 @@ fn main () -> error::Result<()> {
 
 Собрать цель под покрытие можно командой:
 
-    $ RUSTFLAGS="-Zinstrument-coverage" cargo +nightly  build --features
-coverage
+    $ RUSTFLAGS="-Zinstrument-coverage" cargo +nightly  build --features coverage
 
 Затем, можно написать скрипт, который запускает  программу на входном корпусе и
 получает \*.profdata файлы. Пример запуска программы:
