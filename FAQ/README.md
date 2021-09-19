@@ -33,3 +33,13 @@
 [Контейнер для экспериментов](Dockerfile_FAQ_2_static_lib.txt)
 
 #### 3. [Фаззинг и сбор покрытия для проекта на языке Rust](https://github.com/ispras/crusher/blob/master/FAQ/rust-fuzz-example/README.md)
+
+#### 4. Persistence mode и борьба с линкером
+
+[Описание кейса](FAQ_4_pers_mode.md)
+
+[Скрипт загрузки актуальной версии crusher](FAQ_4_pers_mode.md)
+
+[Контейнер для экспериментов](Dockerfile_FAQ_4_pers_mode.txt)
+
+
