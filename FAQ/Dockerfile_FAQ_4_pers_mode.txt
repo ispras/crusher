@@ -14,7 +14,7 @@ RUN groupadd -g $cgid $cgidname &&  useradd -m -u $cuid -g $cgidname -G sudo -s 
 #Just a notes
 LABEL maintainer="ponomarev@fobos-nt.ru"
 LABEL version="1.0"
-LABEL description="net5 coreclr builder for afl Ubuntu 20"
+LABEL description="Persistence mode - CPP, C, anonymous namespaces etc"
 
 #Set Timezone or get hang during the docker build...
 ENV TZ=Europe/Moscow
@@ -34,13 +34,21 @@ update-alternatives --install /usr/bin/llvm-ranlib llvm-ranlib /usr/bin/llvm-ran
 update-alternatives --install /usr/bin/llvm-link llvm-link /usr/bin/llvm-link-12 100 && \
 update-alternatives --install /usr/bin/llvm-objdump llvm-objdump /usr/bin/llvm-objdump-12 100
 
-#Clone repos
+#Download and install Crusher
 WORKDIR /home/$cuidname
-RUN git clone https://github.com/AFLplusplus/AFLplusplus
+curl -XGET "https://raw.githubusercontent.com/DmitryJustDmitry/crusher/master/FAQ/fetch_crusher.sh" -o fetch_crusher.sh && chmod u+x fetch_crusher.sh && ./fetch_crusher.sh .
+
+#Clone AFL, version 3.14c
+WORKDIR /home/$cuidname
+RUN git clone --branch=3.14c --depth=1 https://github.com/AFLplusplus/AFLplusplus
 
 #Build AFL++
 WORKDIR /home/$cuidname/AFLplusplus
 RUN make -j4
+
+#Clone our test target - xml parsing library 'pugixml', version v1.11.14
+WORKDIR /home/$cuidname
+RUN git clone --branch=v1.11.4 --depth=1 https://github.com/zeux/pugixml
 
 USER root
 
