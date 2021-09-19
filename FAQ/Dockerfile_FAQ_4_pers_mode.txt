@@ -51,11 +51,15 @@ RUN make -j4
 
 #Clone our test target - xml parsing library 'pugixml', version v1.11.14
 WORKDIR /home/$cuidname
-RUN git clone --branch=v1.11.4 --depth=1 https://github.com/zeux/pugixml && cd pugixml/src
+RUN git clone --branch=v1.11.4 --depth=1 https://github.com/zeux/pugixml 
+WORKDIR cd /home/$cuidname/pugixml/src
 
 USER root
 
 #ENV cuidname=$cuidname
 #ENV cgidname=$cgidname
+
+#Install extra packages (if needed, for faster container repacking do it here)
+RUN apt-get install -y vim
 
 CMD /bin/bash
