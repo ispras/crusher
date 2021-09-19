@@ -52,7 +52,7 @@ RUN make -j4
 #Clone our test target - xml parsing library 'pugixml', version v1.11.14
 WORKDIR /home/$cuidname
 RUN git clone --branch=v1.11.4 --depth=1 https://github.com/zeux/pugixml 
-WORKDIR /home/$cuidname/
+WORKDIR /home/$cuidname/pugixml/src
 
 USER root
 
