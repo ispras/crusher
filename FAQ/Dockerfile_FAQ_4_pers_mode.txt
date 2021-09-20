@@ -60,6 +60,6 @@ USER root
 #ENV cgidname=$cgidname
 
 #Install extra packages (if needed, for faster container repacking do it here)
-RUN apt-get install -y vim
+RUN apt-get install -y vim mc
 
 CMD /bin/bash
