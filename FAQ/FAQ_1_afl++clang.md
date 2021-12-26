@@ -86,15 +86,15 @@ root@f08907929ba9:/home/crusher/AFLplusplus# cd ../AFLplusplus/ && make clean &&
 
 ```
 root@f08907929ba9:/home/crusher/AFLplusplus# update-alternatives --install /usr/bin/clang clang /usr/bin/clang-12 100 && \
-> update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-12 100 && \
-> update-alternatives --install /usr/bin/c++ c++ /usr/bin/clang++-12 100 && \
-> update-alternatives --install /usr/bin/cc cc /usr/bin/clang-12 100 && \
-> update-alternatives --install /usr/bin/llvm-config llvm-config /usr/bin/llvm-config-12 100 && \
-> update-alternatives --install /usr/bin/llvm-ar llvm-ar /usr/bin/llvm-ar-12 100 && \
-> update-alternatives --install /usr/bin/llvm-nm llvm-nm /usr/bin/llvm-nm-12 100 && \
-> update-alternatives --install /usr/bin/llvm-ranlib llvm-ranlib /usr/bin/llvm-ranlib-12 100 && \
-> update-alternatives --install /usr/bin/llvm-link llvm-link /usr/bin/llvm-link-12 100 && \
-> update-alternatives --install /usr/bin/llvm-objdump llvm-objdump /usr/bin/llvm-objdump-12 100
+update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-12 100 && \
+update-alternatives --install /usr/bin/c++ c++ /usr/bin/clang++-12 100 && \
+update-alternatives --install /usr/bin/cc cc /usr/bin/clang-12 100 && \
+update-alternatives --install /usr/bin/llvm-config llvm-config /usr/bin/llvm-config-12 100 && \
+update-alternatives --install /usr/bin/llvm-ar llvm-ar /usr/bin/llvm-ar-12 100 && \
+update-alternatives --install /usr/bin/llvm-nm llvm-nm /usr/bin/llvm-nm-12 100 && \
+update-alternatives --install /usr/bin/llvm-ranlib llvm-ranlib /usr/bin/llvm-ranlib-12 100 && \
+update-alternatives --install /usr/bin/llvm-link llvm-link /usr/bin/llvm-link-12 100 && \
+update-alternatives --install /usr/bin/llvm-objdump llvm-objdump /usr/bin/llvm-objdump-12 100
 update-alternatives: using /usr/bin/clang-12 to provide /usr/bin/clang (clang) in auto mode
 update-alternatives: using /usr/bin/clang++-12 to provide /usr/bin/clang++ (clang++) in auto mode
 update-alternatives: using /usr/bin/clang++-12 to provide /usr/bin/c++ (c++) in auto mode
