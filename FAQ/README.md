@@ -48,4 +48,12 @@
 
 [Контейнер для экспериментов](Dockerfile_FAQ_4_pers_mode.txt)
 
+#### 5. Фаззинг C#-кода в Linux-среде
 
+Вводную лекцию по принципам и целям фаззинга управляемого кода можно посмотреть например [здесь](https://www.youtube.com/watch?v=TmhE2m4W-kQ).
+
+Основным фаззером - к сожалению с непонятным статусом поддержки - является [sharpfuzz](https://github.com/Metalnem/sharpfuzz). По ссылке приведён подробный пример как его установить и использовать.
+
+Ещё один пример, а также имплементация механизма Structure Aware Fuzzing для C#, доступен в репозитории [FuzzedDataProviderCS](https://github.com/ispras/FuzzedDataProviderCS).
+
+Сбор покрытия для C#-кода можно выполнить с помощью например [minicover](https://github.com/lucaslorentz/minicover), по краткой [инструкции](https://github.com/ispras/crusher/blob/master/FAQ/FAQ_5_csharp.md)
