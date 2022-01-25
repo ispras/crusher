@@ -1,0 +1,11 @@
+{
+  "fuzzer_options": [
+    "-M", "1",
+    "--eat-cores", "1",
+    "--dse-cores", "1",
+    "-F",
+    "-I", "dualemu",
+    "-T", "dualemu"
+  ],
+  "program_options": ["./emu_script_dump.py"]
+}
