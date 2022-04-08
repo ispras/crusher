@@ -21,7 +21,7 @@ echo "jasper analysis"
 echo ""
 clean_result
 
-COMMAND="$FUZZMANAGER --start $CORES --eat-cores 1 --dse-cores 1 --dse-threads 0 -i in -o out --dse-force 5000 -- ./jasper -f __DATA__ -t mif -F Out_tmp -T mif"
+COMMAND="$FUZZMANAGER --start $CORES --eat-cores 1 --dse-cores 1 -i in -o out -- ./jasper -f __DATA__ -t mif -F Out_tmp -T mif"
 echo $COMMAND
 $COMMAND
 
