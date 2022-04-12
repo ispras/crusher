@@ -369,7 +369,7 @@ Info: Found constructor function _GLOBAL__sub_I_pugixml.cpp with prio 65535, we 
 user@fuzzing:/tmp/faq4$ docker run --network host --privileged  -it --name=pers_ft pers_with_fuzztarget /bin/bash
 root@fuzzing:/home/user/pugixml/src# mkdir in out && echo 123456 > in/sample1
 root@fuzzing:/home/user/pugixml/src# echo core >/proc/sys/kernel/core_pattern
-root@fuzzing:/home/user/pugixml/src# ../../crusher/bin_x86-64/fuzz_manager -F -i in -o out -I StaticForkSrv --start 1 -- fuzztarget @@
+root@fuzzing:/home/user/pugixml/src# /opt/crusher/crusher/bin_x86-64/fuzz_manager -F -i in -o out -I StaticForkSrv --start 1 -- fuzztarget @@
 --force/-F option is enabled. This will delete output directory. Are you sure?[Y/N]')
 Y
 [2021-09-20 23:22:13.210] [FuzzManager] [info] Read input dir DONE. 1 files from the queue will be divided into 1 parts each at least containing 1 items
