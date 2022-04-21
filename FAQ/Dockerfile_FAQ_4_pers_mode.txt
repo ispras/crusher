@@ -39,7 +39,11 @@ update-alternatives --install /usr/bin/llvm-objdump llvm-objdump /usr/bin/llvm-o
 
 #Download and install Crusher
 WORKDIR /home/$cuidname
-RUN curl -XGET "https://raw.githubusercontent.com/DmitryJustDmitry/crusher/master/FAQ/fetch_crusher.sh" -o fetch_crusher.sh && chmod u+x fetch_crusher.sh && ./fetch_crusher.sh . 
+RUN curl -o linux.zip -XGET "https://nextcloud.ispras.ru/index.php/s/xrtSXt8rMydRiFf/download?path=%2F&files=Linux" && \
+unzip linux.zip -d ~ && \
+cd ~/Linux && \
+mkdir /opt/crusher && \
+tar -xzf $(ls *crusher-linux-v*) --directory /opt/crusher 
 
 #Clone AFL, version 3.14c
 WORKDIR /home/$cuidname

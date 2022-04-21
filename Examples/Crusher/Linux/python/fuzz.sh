@@ -20,7 +20,7 @@ echo "python analysis"
 echo ""
 clean_result
 
-COMMAND="$FUZZMANAGER --start $CORES --eat-cores 1 --dse-cores 1 --dse-threads 0 -i in -o out -t 20000 -- ./python-2.5 __DATA__"
+COMMAND="$FUZZMANAGER --start $CORES --eat-cores 1 --dse-cores 0 -i in -o out -t 20000 -- ./python-2.5 __DATA__"
 echo $COMMAND
 $COMMAND
 
