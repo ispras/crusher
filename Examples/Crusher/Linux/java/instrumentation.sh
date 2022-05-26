@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [[ "$#" -ne 1 ]]; then
-    echo "Usage: ./instrumentation.sh <path/to/kelinci.jar>"
+    echo "Usage: ./instrumentation.sh <path/to/kelinci>"
     exit 1
 fi
 
@@ -10,9 +10,8 @@ KELINCI=$1
 mkdir bin
 cp target/test.class bin/test.class
 
-echo "instrument project"
-/usr/bin/java -cp ${KELINCI} edu.cmu.sv.kelinci.instrumentator.Instrumentor \
--i target/commons-math3-3.6.1.jar -o target/commons-math3-3.6.1-instr.jar
+echo "instrument project and libraries"
 
-/usr/bin/java -cp ${KELINCI}:target/commons-math3-3.6.1-instr.jar edu.cmu.sv.kelinci.instrumentator.Instrumentor -i bin -o bin-instr
+python3 ${KELINCI}/instrument.py -cp_i target/commons-math3-3.6.1.jar -i ./bin -o ./bin-instr
+
 
