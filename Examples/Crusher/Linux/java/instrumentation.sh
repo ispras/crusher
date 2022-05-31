@@ -12,6 +12,6 @@ cp target/test.class bin/test.class
 
 echo "instrument project and libraries"
 
-python3 ${KELINCI}/instrument.py -cp_i target/commons-math3-3.6.1.jar -i ./bin -o ./bin-instr
+${KELINCI}/instrument.bin -cp_i target/commons-math3-3.6.1.jar -i ./bin -o ./bin-instr
 
 
