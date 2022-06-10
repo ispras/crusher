@@ -8,8 +8,10 @@
 
 # Подготовка к фаззингу
 1. Необходимо дополнительно установить atheris (с применением соответствующих патчей) в python фаззера:
+```shell
 ./path/to/crusher/tools/install_atheris.sh
-2. Необходимо установить библиотеки pdfquery и six в python фаззера:
+```
+3. Необходимо установить библиотеки pdfquery и six в python фаззера:
 path/to/crusher/bin_x86-64/python-3.9_x86_64/bin/pip3 install pdfquery six
 
 # Фаззинг
