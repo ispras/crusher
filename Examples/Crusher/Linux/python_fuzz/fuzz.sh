@@ -7,5 +7,5 @@ fi
 
 FUZZ_MAN=$1
 
-$FUZZ_MAN --start 10 -F -i in -o out -I PyInst -- target/pdfquery/load/testpdf.py @@
+$FUZZ_MAN --start 10 -F -i in -o out -I PyInst -- testpdf.py @@
 
