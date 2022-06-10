@@ -1,8 +1,8 @@
 # Общее описание
 
 Фаззинг библиотеки на языке Python.
-В качестве целевой выбрана функция load() из библиотеки pdfquery.
-Обёртка над функцией - testpdf.py
+В качестве целевой выбрана функция `load()` из библиотеки pdfquery.
+Обёртка над функцией - [testpdf.py](testpdf.py)
 
 Подробнее про фаззинг приложений на языке Python - см. раздел "Инструментация Python" в документации к Crusher.
 
@@ -12,7 +12,9 @@
 ./path/to/crusher/tools/install_atheris.sh
 ```
 3. Необходимо установить библиотеки pdfquery и six в python фаззера:
+```shell
 path/to/crusher/bin_x86-64/python-3.9_x86_64/bin/pip3 install pdfquery six
+```
 
 # Фаззинг
 
