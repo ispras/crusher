@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "gy9T6aO9zJuTjyCpfYbokURjhZXCDBEal0ixrioDn5VAZaLunx9phJPh4HfFZ3Qst5azzwQufmV5d88DtyDngA==",
+  "dgSpecHash": "/HgSVyE8Dz/JZua04safbH1MIMRd2952QXNXXeFDR1BoZ8fzLdHpC3af/YbVEhuCz9reNojWMb6n246W2oL+qQ==",
   "success": true,
-  "projectFilePath": "/home/farida/github/crusher/Examples/Crusher/Linux/c#/target/AngleSharp.Fuzz.File/AngleSharp.Fuzz.File.csproj",
+  "projectFilePath": "/home/farida/github/crusher/Examples/Crusher/Linux/csharp/target/AngleSharp.Fuzz.File/AngleSharp.Fuzz.File.csproj",
   "expectedPackageFiles": [
     "/home/farida/.nuget/packages/dnlib/3.3.1/dnlib.3.3.1.nupkg.sha512",
     "/home/farida/.nuget/packages/sharpfuzz/1.6.2/sharpfuzz.1.6.2.nupkg.sha512",

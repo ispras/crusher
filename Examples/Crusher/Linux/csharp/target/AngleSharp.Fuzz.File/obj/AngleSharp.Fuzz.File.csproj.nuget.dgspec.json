@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/farida/github/crusher/Examples/Crusher/Linux/c#/target/AngleSharp.Fuzz.File/AngleSharp.Fuzz.File.csproj": {}
+    "/home/farida/github/crusher/Examples/Crusher/Linux/csharp/target/AngleSharp.Fuzz.File/AngleSharp.Fuzz.File.csproj": {}
   },
   "projects": {
-    "/home/farida/github/crusher/Examples/Crusher/Linux/c#/target/AngleSharp.Fuzz.File/AngleSharp.Fuzz.File.csproj": {
+    "/home/farida/github/crusher/Examples/Crusher/Linux/csharp/target/AngleSharp.Fuzz.File/AngleSharp.Fuzz.File.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/farida/github/crusher/Examples/Crusher/Linux/c#/target/AngleSharp.Fuzz.File/AngleSharp.Fuzz.File.csproj",
+        "projectUniqueName": "/home/farida/github/crusher/Examples/Crusher/Linux/csharp/target/AngleSharp.Fuzz.File/AngleSharp.Fuzz.File.csproj",
         "projectName": "AngleSharp.Fuzz.File",
-        "projectPath": "/home/farida/github/crusher/Examples/Crusher/Linux/c#/target/AngleSharp.Fuzz.File/AngleSharp.Fuzz.File.csproj",
+        "projectPath": "/home/farida/github/crusher/Examples/Crusher/Linux/csharp/target/AngleSharp.Fuzz.File/AngleSharp.Fuzz.File.csproj",
         "packagesPath": "/home/farida/.nuget/packages/",
-        "outputPath": "/home/farida/github/crusher/Examples/Crusher/Linux/c#/target/AngleSharp.Fuzz.File/obj/",
+        "outputPath": "/home/farida/github/crusher/Examples/Crusher/Linux/csharp/target/AngleSharp.Fuzz.File/obj/",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "/usr/share/dotnet/sdk/NuGetFallbackFolder"
