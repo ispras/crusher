@@ -1,0 +1,15 @@
+/home/farida/sharpfuzz-samples/AngleSharp/AngleSharp.Fuzz/bin/Debug/netcoreapp2.2/AngleSharp.Fuzz.deps.json
+/home/farida/sharpfuzz-samples/AngleSharp/AngleSharp.Fuzz/bin/Debug/netcoreapp2.2/AngleSharp.Fuzz.runtimeconfig.json
+/home/farida/sharpfuzz-samples/AngleSharp/AngleSharp.Fuzz/bin/Debug/netcoreapp2.2/AngleSharp.Fuzz.runtimeconfig.dev.json
+/home/farida/sharpfuzz-samples/AngleSharp/AngleSharp.Fuzz/bin/Debug/netcoreapp2.2/AngleSharp.Fuzz.dll
+/home/farida/sharpfuzz-samples/AngleSharp/AngleSharp.Fuzz/bin/Debug/netcoreapp2.2/AngleSharp.Fuzz.pdb
+/home/farida/sharpfuzz-samples/AngleSharp/AngleSharp.Fuzz/bin/Debug/netcoreapp2.2/AngleSharp.dll
+/home/farida/sharpfuzz-samples/AngleSharp/AngleSharp.Fuzz/obj/Debug/netcoreapp2.2/AngleSharp.Fuzz.csproj.AssemblyReference.cache
+/home/farida/sharpfuzz-samples/AngleSharp/AngleSharp.Fuzz/obj/Debug/netcoreapp2.2/AngleSharp.Fuzz.GeneratedMSBuildEditorConfig.editorconfig
+/home/farida/sharpfuzz-samples/AngleSharp/AngleSharp.Fuzz/obj/Debug/netcoreapp2.2/AngleSharp.Fuzz.AssemblyInfoInputs.cache
+/home/farida/sharpfuzz-samples/AngleSharp/AngleSharp.Fuzz/obj/Debug/netcoreapp2.2/AngleSharp.Fuzz.AssemblyInfo.cs
+/home/farida/sharpfuzz-samples/AngleSharp/AngleSharp.Fuzz/obj/Debug/netcoreapp2.2/AngleSharp.Fuzz.csproj.CoreCompileInputs.cache
+/home/farida/sharpfuzz-samples/AngleSharp/AngleSharp.Fuzz/obj/Debug/netcoreapp2.2/AngleSharp.Fuzz.csproj.CopyComplete
+/home/farida/sharpfuzz-samples/AngleSharp/AngleSharp.Fuzz/obj/Debug/netcoreapp2.2/AngleSharp.Fuzz.dll
+/home/farida/sharpfuzz-samples/AngleSharp/AngleSharp.Fuzz/obj/Debug/netcoreapp2.2/AngleSharp.Fuzz.pdb
+/home/farida/sharpfuzz-samples/AngleSharp/AngleSharp.Fuzz/obj/Debug/netcoreapp2.2/AngleSharp.Fuzz.genruntimeconfig.cache
