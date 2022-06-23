@@ -1,0 +1,69 @@
+{
+  "format": 1,
+  "restore": {
+    "/home/farida/github/crusher/Examples/Crusher/Linux/c#/target/AngleSharp.Fuzz.File/AngleSharp.Fuzz.File.csproj": {}
+  },
+  "projects": {
+    "/home/farida/github/crusher/Examples/Crusher/Linux/c#/target/AngleSharp.Fuzz.File/AngleSharp.Fuzz.File.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/farida/github/crusher/Examples/Crusher/Linux/c#/target/AngleSharp.Fuzz.File/AngleSharp.Fuzz.File.csproj",
+        "projectName": "AngleSharp.Fuzz.File",
+        "projectPath": "/home/farida/github/crusher/Examples/Crusher/Linux/c#/target/AngleSharp.Fuzz.File/AngleSharp.Fuzz.File.csproj",
+        "packagesPath": "/home/farida/.nuget/packages/",
+        "outputPath": "/home/farida/github/crusher/Examples/Crusher/Linux/c#/target/AngleSharp.Fuzz.File/obj/",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "/usr/share/dotnet/sdk/NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "/home/farida/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "SharpFuzz": {
+              "target": "Package",
+              "version": "[1.6.2, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/6.0.301/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

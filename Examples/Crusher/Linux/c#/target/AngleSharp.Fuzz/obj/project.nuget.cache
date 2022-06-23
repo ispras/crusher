@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "kK9kD5TZIVdoXC0gIlHbs15XVNS7dRoUZMtamdXPfIEtOquMNZrhYxMIujJaTRM6/oWzsAMMtTdmJK63WgyjzQ==",
+  "success": true,
+  "projectFilePath": "/home/farida/sharpfuzz-samples/AngleSharp/AngleSharp.Fuzz/AngleSharp.Fuzz.csproj",
+  "expectedPackageFiles": [
+    "/home/farida/.nuget/packages/dnlib/3.3.1/dnlib.3.3.1.nupkg.sha512",
+    "/home/farida/.nuget/packages/sharpfuzz/1.6.2/sharpfuzz.1.6.2.nupkg.sha512",
+    "/home/farida/.nuget/packages/sharpfuzz.common/2.2.0/sharpfuzz.common.2.2.0.nupkg.sha512",
+    "/home/farida/.nuget/packages/system.memory/4.5.4/system.memory.4.5.4.nupkg.sha512",
+    "/home/farida/.nuget/packages/system.reflection.emit/4.7.0/system.reflection.emit.4.7.0.nupkg.sha512",
+    "/home/farida/.nuget/packages/system.reflection.emit.lightweight/4.7.0/system.reflection.emit.lightweight.4.7.0.nupkg.sha512"
+  ],
+  "logs": []
+}
