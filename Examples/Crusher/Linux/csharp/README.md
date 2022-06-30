@@ -5,7 +5,7 @@
 # Создание проекта - обертки
 
 В системе должен быть установлен пакет SDK и среда выполнения ASP.NET Core. Ссылка на инструкцию по их установке для
-всех поддерживаемых операционных систем - https://docs.microsoft.com/ru-ru/dotnet/core/install/
+всех поддерживаемых операционных систем - https://docs.microsoft.com/ru-ru/dotnet/core/install/.
 Необходимо выбрать свою ОС, её версию и последовательно выполнить все шаги установки.
 
 Если у Вас Ubuntu, то перейдите по данной ссылке (https://docs.microsoft.com/ru-ru/dotnet/core/install/linux-ubuntu) и выполните установку
