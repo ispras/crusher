@@ -9,7 +9,7 @@ for %%x in (%*) do (
 )
 
 if %argC% LSS 1 (
-  echo Usage: build.bat /path/to/dotnet.exe
+  echo Usage: build.bat \\path\\to\\dotnet.exe
   goto finish
 )
 
