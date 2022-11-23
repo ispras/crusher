@@ -12,6 +12,7 @@
 Фаззинг происходит через **файл**, работаем с первым аргументом командной строки - `args[0]`. Ниже
 показан файл `Program.cs`:
 
+
 ```c++
 using System;
 using AngleSharp.Parser.Html;
@@ -40,6 +41,7 @@ namespace AngleSharp.Fuzz
 ```
 
 Файл `AngleSharp.Fuzz.File.csproj`:
+
 
 ```xml
 <Project Sdk="Microsoft.NET.Sdk">
@@ -75,6 +77,7 @@ namespace AngleSharp.Fuzz
     </Reference>
   </ItemGroup>
 
+
 </Project>
 ```
 
@@ -85,6 +88,7 @@ namespace AngleSharp.Fuzz
 2. Находясь в данной директории, запустите скрипт `fuzz.bat` для фаззинга библиотеки через **файл**; он принимает два аргумента - путь до `fuzz_manager.exe` и до `dotnet.exe`, установленного в Вашей системе.
 
 3. Запустите в другом терминале `UI` фаззера (укажите актуальные пути):
+
 ```shell
 /path/to/crusher/bin_x86-64/ui.exe --outdir /path/to/out
 ```

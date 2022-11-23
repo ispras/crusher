@@ -1,0 +1,3 @@
+is_global = true
+build_property.RootNamespace = AngleSharp.Fuzz
+build_property.ProjectDir = /home/farida/sharpfuzz-samples/AngleSharp/AngleSharp.Fuzz/
