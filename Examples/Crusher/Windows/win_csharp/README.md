@@ -3,19 +3,15 @@
 Этот пример показывает фаззинг dll библиотек, написанных на C#.
 
 # Создание проекта - обертки
-1. В корень проекта ExampleWrapperProject положите библиотеку, которую Вы хотите пофазззить.
-   В файле ExampleWrapperProject.csproj пропишите соответствующую зависимость. В примере это `AngleSharp.dll`
+1. В корне проекта-обертки `target/AngleSharp.Fuzz.File` лежит библиотека `AngleSharp.dll`, которую хотим пофаззить. В файле `*.csproj` прописана соответствующая зависимость для ее видимости.
 
-2. В файле `Program.cs`, в качестве аргумента функции `Run` передайте лямбда-функцию (см. пример ниже),
-   в которой Вы вызываете функцию из тестируемой библиотеки (в примере - функция `Parse()` библиотеки  `AngleSharp`).
+2. В файле `Program.cs` в качестве аргумента функции `Run` передается лямбда-функция (см. пример ниже), в которой вызывается функция `Parse()` из тестируемой библиотеки `AngleSharp`.
 
-3. В директории `win_csharp/target/AngleSharp.Fuzz.File` лежат 3 dll библиотеки: SharpFuzz.dll, SharpFuzz.CommandLine.dll,
-   SharpFuzz.Common.dll. Они были добавлены в Ваш проект-обертку в качестве зависимостей, были прописаны соотвествующие
-   строки в файле `ExampleWrapperProject.csproj` (см. пример ниже). Здесь находится функция для запуска Вашей библиотеки (проекта-обертки) 
-   и собирается проект-обертка как dll файл.
+3. В директории `target/AngleSharp.Fuzz.File` лежат 3 dll библиотеки: SharpFuzz.dll, SharpFuzz.CommandLine.dll, SharpFuzz.Common.dll. Они также добавлены в проект `AngleSharp.Fuzz.File` в качестве зависимостей (необходимые строки прописаны в `AngleSharp.Fuzz.File.csproj`. В них находится функция для запуска нашего проекта-обертки `AngleSharp.Fuzz.File` и он собирается как dll файл.
 
 Фаззинг происходит через **файл**, работаем с первым аргументом командной строки - `args[0]`. Ниже
-приведен пример файла `Program.cs`:
+показан файл `Program.cs`:
+
 
 ```c++
 using System;
@@ -44,7 +40,8 @@ namespace AngleSharp.Fuzz
 
 ```
 
-Пример файла `ExampleWrapperProject.csproj`:
+Файл `AngleSharp.Fuzz.File.csproj`:
+
 
 ```xml
 <Project Sdk="Microsoft.NET.Sdk">
@@ -61,41 +58,37 @@ namespace AngleSharp.Fuzz
     </Reference>
   </ItemGroup>
 
-   <ItemGroup>
-      <Reference Include="SharpFuzz">
-         <HintPath>SharpFuzz.dll</HintPath>
-      </Reference>
-   </ItemGroup>
+  <ItemGroup>
+    <Reference Include="SharpFuzz">
+      <HintPath>SharpFuzz.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 
-   <ItemGroup>
-      <Reference Include="SharpFuzz.CommandLine">
-         <HintPath>SharpFuzz.CommandLine.dll</HintPath>
-      </Reference>
-   </ItemGroup>
+    <ItemGroup>
+    <Reference Include="SharpFuzz.CommandLine">
+      <HintPath>SharpFuzz.CommandLine.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 
 
-   <ItemGroup>
-      <Reference Include="SharpFuzz.Common">
-         <HintPath>SharpFuzz.Common.dll</HintPath>
-      </Reference>
-   </ItemGroup>
+    <ItemGroup>
+    <Reference Include="SharpFuzz.Common">
+      <HintPath>SharpFuzz.Common.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 
 
 </Project>
 ```
 
-3. Произведите инструментацию библиотеки для фаззинга. Соберите проект-обертку. Для этого 
-запустите скрипт `instrument.bat`, который принимает один аргумент - путь до `dotnet.exe`.
-
-В данном примере проект-обертка (фаззинг через файл) находится в директории `target`.
-
-
 # Фаззинг
 
-Находясь в данной директории, запустите скрипт `fuzz.bat` для фаззинга библиотеки через **файл**;
-он принимаtт два аргумента - путь до `fuzz_manager.exe` и до `dotnet.exe`, установленного в Вашей системе.
+1. Произведите инструментацию библиотеки `AngleSharp.dll` для фаззинга. Соберите проект-обертку `target/AngleSharp.Fuzz.File`. Для этого запустите скрипт `instrument.bat`, который принимает один аргумент - путь до `dotnet.exe`.
 
-Запустите в другом терминале `UI` фаззера (укажите актуальные пути):
+2. Находясь в данной директории, запустите скрипт `fuzz.bat` для фаззинга библиотеки через **файл**; он принимает два аргумента - путь до `fuzz_manager.exe` и до `dotnet.exe`, установленного в Вашей системе.
+
+3. Запустите в другом терминале `UI` фаззера (укажите актуальные пути):
+
 ```shell
 /path/to/crusher/bin_x86-64/ui.exe --outdir /path/to/out
 ```
