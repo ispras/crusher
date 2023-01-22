@@ -7,16 +7,20 @@ fi
 
 DOTNET=$1
 
-echo "install SharpFuzz.CommandLine global .NET tool"
+echo "installing SharpFuzz.CommandLine .NET tool..."
 
-$DOTNET tool install --global SharpFuzz.CommandLine
+if [ -f "sharpfuzz" ]; then
+    $DOTNET tool uninstall SharpFuzz.CommandLine --tool-path .
+fi
 
-echo "instrument dll"
+$DOTNET tool install SharpFuzz.CommandLine --version 2.0.0 --tool-path .
 
-sharpfuzz ./target/AngleSharp.Fuzz/AngleSharp.dll
-sharpfuzz ./target/AngleSharp.Fuzz.File/AngleSharp.dll
+echo "instrumenting dlls..."
 
-echo "add SharpFuzz package"
+./sharpfuzz ./target/AngleSharp.Fuzz/AngleSharp.dll
+./sharpfuzz ./target/AngleSharp.Fuzz.File/AngleSharp.dll
+
+echo "adding SharpFuzz package..."
 
 cd ./target/AngleSharp.Fuzz
 $DOTNET add package SharpFuzz --version 1.6.2
