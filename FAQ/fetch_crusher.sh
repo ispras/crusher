@@ -23,7 +23,7 @@ then
     exit 0
 fi
 
-URL_BASE="https://nextcloud.ispras.ru/s/y4JQq7K5YXmfDSy/download"
+URL_BASE="https://nextcloud.ispras.ru/s/xrtSXt8rMydRiFf/download"
 
 LATEST_VERSION=`curl "$URL_BASE?path=%2FLinux&files=Changelog-Linux.md" 2>/dev/null | grep '## Версия' | head -n1 | sed 's/.*\[\(.*\)\].*/\1/'`
 
