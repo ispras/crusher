@@ -1,0 +1,23 @@
+diff -Naur nginx-1.12.1/src/os/unix/ngx_process_cycle.c nginx-M/src/os/unix/ngx_process_cycle.c
+--- nginx-1.12.1/src/os/unix/ngx_process_cycle.c	2017-07-11 16:24:10.000000000 +0300
++++ nginx-M/src/os/unix/ngx_process_cycle.c	2021-11-19 12:57:32.303641121 +0300
+@@ -303,6 +303,8 @@
+         }
+     }
+ 
++    static volatile int run_count = 0;
++
+     for ( ;; ) {
+         ngx_log_debug0(NGX_LOG_DEBUG_EVENT, cycle->log, 0, "worker cycle");
+ 
+@@ -337,6 +339,9 @@
+             ngx_log_error(NGX_LOG_NOTICE, cycle->log, 0, "reopening logs");
+             ngx_reopen_files(cycle, (ngx_uid_t) -1);
+         }
++
++        if (run_count >= 1) exit(0);
++        run_count += 1;
+     }
+ }
+
+
