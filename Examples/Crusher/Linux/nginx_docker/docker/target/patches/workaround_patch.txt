@@ -1,0 +1,14 @@
+diff -Naur nginx-1.12.1/src/os/unix/ngx_user.c nginx-M/src/os/unix/ngx_user.c
+--- nginx-1.12.1/src/os/unix/ngx_user.c	2017-07-11 16:24:10.000000000 +0300
++++ nginx-M/src/os/unix/ngx_user.c	2021-11-24 17:56:17.888119224 +0300
+@@ -31,10 +31,6 @@
+     struct crypt_data   cd;
+ 
+     cd.initialized = 0;
+-#ifdef __GLIBC__
+-    /* work around the glibc bug */
+-    cd.current_salt[0] = ~salt[0];
+-#endif
+ 
+     value = crypt_r((char *) key, (char *) salt, &cd);
+ 
