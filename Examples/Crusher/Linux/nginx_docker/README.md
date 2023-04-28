@@ -57,7 +57,7 @@ docker build --network host -f Dockerfile . -t nginx-demo
 
 2) Мониторинг:
 ```shell
-$HOME/crusher/bin_x86-64/ui -o out
+crusher/bin_x86-64/ui -o out
 ```
 
 Для более детального ознакомления с фаззингом в докер-режиме - см. раздел `Фаззинг в докер-контейнерах` документации. 
