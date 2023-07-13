@@ -8,13 +8,14 @@
 5) [stm32](stm32) - фаззинг ПО устройства ARM (на основе частичной эмуляции с Lua-Qemu);
 6) [firmware_x86_32](firmware_x86_32) - фаззинг ПО устройства x86 (32-бит) (на основе частичной эмуляции с Lua-Qemu);
 7) [firmware_x86_64]( firmware_x86_64) - фаззинг ПО устройства x86 (64-бит) (на основе частичной эмуляции с Lua-Qemu);
-8) [qiling](qiling) - фаззинг с частичной эмуляцией с помощью Qiling;
-9) [unicorn](unicorn) - фаззинг с помощью эмулятора Unicorn;
-10) [partial_emulation](partial_emulation) - пример частичной эмуляции с помощью модуля DualEmu, комбинирующего фаззинг с помощью unicornafl и DSE с Angr;
-11) [java](java) - фаззинг JAVA приложения через файл;
-12) [python_fuzz](python_fuzz) - фаззинг библиотеки на языке python;
-13) [c#](csharp) - фаззинг dll библиотек, написанных на C#, через файл и stdin;
-14) [nginx_docker](nginx_docker) - фаззинг сервера Nginx в Docker-режиме
+8) [fullsystem_emulation](fullsystem_emulation) - фаззинг с полносистемной эмуляцией х86 (64-бит) (на основе частичной эмуляции с Lua-Qemu);
+9) [qiling](qiling) - фаззинг с частичной эмуляцией с помощью Qiling;
+10) [unicorn](unicorn) - фаззинг с помощью эмулятора Unicorn;
+11) [partial_emulation](partial_emulation) - пример частичной эмуляции с помощью модуля DualEmu, комбинирующего фаззинг с помощью unicornafl и DSE с Angr;
+12) [java](java) - фаззинг JAVA приложения через файл;
+13) [python_fuzz](python_fuzz) - фаззинг библиотеки на языке python;
+14) [c#](csharp) - фаззинг dll библиотек, написанных на C#, через файл и stdin;
+15) [nginx_docker](nginx_docker) - фаззинг сервера Nginx в Docker-режиме
 
 Далее приведена последовательность действий по фаззингу, мониторингу и воспроизведению аварийных завершений (крешей) для следующих примеров: `python`, `jasper` и `faad`.
 
