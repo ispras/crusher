@@ -45,7 +45,7 @@ def __init__(self, ip, port, delay):
 Обязательным методом класса транспортного модуля является метод `send_data`.
 
 ```python
-def send_data(self, data=None):
+def send_data(self, data=None, delay=None):
 ```
 
 Метод `send_data`  принимает на вход буфер с мутированными данными от ядра фаззера. Обязательным является задание для 
@@ -57,7 +57,7 @@ def send_data(self, data=None):
 встроить в метод `send_data` пользовательского модуля передачи данных сам, как показано в примере:
 
 ```python
-def send_data(self, data=None):
+def send_data(self, data=None, delay=None):
     if data is None:
         return 42
 ```

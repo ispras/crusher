@@ -10,7 +10,7 @@ class PyNetwork(object):
     def __init__(self, ip, port, delay):
         self.ip = ip
         self.port = port
-        self.delay = delay
+        self.delay = delay  # milliseconds
 
         self.sock = None
         self.setup_listener()
@@ -56,15 +56,17 @@ class PyNetwork(object):
                     exit(1)
         print("Setup listener COMPLETE")
 
-    def send_data(self, data=None):
+    def send_data(self, data=None, delay=None):
         if data is None:
             return 42
+
+        self.delay = delay
 
         tries = 8
         max_recv_buf_size = 1024
 
         # Accept connection
-        self.sock.settimeout(self.delay)
+        self.sock.settimeout(float(self.delay) / 1000)
         start = int(round(time.time() * 1000))
         for i in range(tries):
             try:
@@ -73,7 +75,6 @@ class PyNetwork(object):
             except Exception as exc:
                 if int(round(time.time() * 1000)) - start >= self.delay:
                     print('Cannot accept connection: %s' % str(exc))
-                    self.sock.close()
                     return False
         # Receive packet
         try:
@@ -90,7 +91,6 @@ class PyNetwork(object):
             conn.send(data)
         except Exception as exc:
             print("Exception send packet: %s" % str(exc))
-            self.sock.close()
             return False
 
         # Close connection

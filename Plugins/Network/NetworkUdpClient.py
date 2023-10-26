@@ -10,7 +10,7 @@ class PyNetwork(object):
     def __init__(self, ip, port, delay):
         self.ip = ip
         self.port = port
-        self.delay = delay
+        self.delay = delay  # milliseconds
         self.sock = None
         self.setup_listener()
 
@@ -43,14 +43,16 @@ class PyNetwork(object):
                     exit(1)
         print("Setup listener COMPLETE")
 
-    def send_data(self, data=None):
+    def send_data(self, data=None, delay=None):
         if data is None:
             return 42
+
+        self.delay = delay
 
         max_recv_buf_size = 1024
 
         # Receive packet
-        self.sock.settimeout(self.delay)
+        self.sock.settimeout(float(self.delay) / 1000)
         try:
             recv_data, addr = self.sock.recvfrom(max_recv_buf_size)
         except Exception as exc:

@@ -1,0 +1,27 @@
+{
+	"manager-options": {
+		"--dse-cores": 0,
+		"--wait-next-instance": 200,
+		"-t": 400
+	},
+
+	"instance-options": {
+		"-I": "StaticForkSrv",
+		"--redirect-stdin-off": true,
+		"-T": "ModClient",
+		"--mod-client": "./plugins/client.py",
+		"--port": "__free_port",
+		"--delay": 20,
+		"--configurator-script": "./plugins/conf.py"
+	},
+
+	"fuzz-options": {
+		"--eat-sync": true
+	},
+
+	"eat-options": {
+		"--no-valgrind": true,
+		"--no-drmemory": true,
+		"--no-crash-critical": true
+	}
+}

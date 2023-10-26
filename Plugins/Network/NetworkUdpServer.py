@@ -10,13 +10,15 @@ class PyNetwork(object):
     def __init__(self, ip, port, delay):
         self.ip = ip
         self.port = port
-        self.delay = delay
+        self.delay = delay  # milliseconds
 
-    def send_data(self, data=None):
+    def send_data(self, data=None, delay=None):
         if data is None:
             return 42
 
-        time.sleep(self.delay)
+        self.delay = delay
+
+        time.sleep(float(self.delay) / 1000)
         # Create socket
         try:
             sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)

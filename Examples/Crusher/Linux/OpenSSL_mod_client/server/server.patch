@@ -1,0 +1,75 @@
+diff --git a/apps/s_server.c b/apps/s_server.c
+index 0ba75999fd..c5af6fa093 100644
+--- a/apps/s_server.c
++++ b/apps/s_server.c
+@@ -60,6 +60,36 @@ typedef unsigned int u_int;
+ #endif
+ #include "internal/sockets.h"
+ 
++#include <openssl/rand.h>
++
++static int fuzz_bytes(unsigned char *buf, int num)
++{
++  unsigned char val = 1;
++
++  while (--num >= 0)
++    *buf++ = val++;
++  return 1;
++}
++
++static int fuzz_status(void)
++{
++  return 1;
++}
++
++static RAND_METHOD fuzz_rand_method = {
++        NULL,
++        fuzz_bytes,
++        NULL,
++        NULL,
++        fuzz_bytes,
++        fuzz_status
++};
++
++void FuzzerSetRand(void)
++{
++  RAND_set_rand_method(&fuzz_rand_method);
++}
++
+ static int not_resumable_sess_cb(SSL *s, int is_forward_secure);
+ static int sv_body(int s, int stype, int prot, unsigned char *context);
+ static int www_body(int s, int stype, int prot, unsigned char *context);
+@@ -970,8 +1000,17 @@ const OPTIONS s_server_options[] = {
+  (o == OPT_SSL3 || o == OPT_TLS1 || o == OPT_TLS1_1 || o == OPT_TLS1_2 \
+   || o == OPT_TLS1_3 || o == OPT_DTLS || o == OPT_DTLS1 || o == OPT_DTLS1_2)
+ 
++#include <signal.h>
++
++void sig_handler(int signum){
++  printf("SIGALARM handler - exit\n");
++  exit(0);
++}
++
+ int s_server_main(int argc, char *argv[])
+ {
++    signal(SIGALRM, sig_handler);
++
+     ENGINE *engine = NULL;
+     EVP_PKEY *s_key = NULL, *s_dkey = NULL;
+     SSL_CONF_CTX *cctx = NULL;
+@@ -2152,6 +2191,15 @@ int s_server_main(int argc, char *argv[])
+         && unlink_unix_path)
+         unlink(host);
+ #endif
++
++#ifdef __AFL_HAVE_MANUAL_CONTROL
++    __AFL_INIT();
++#endif
++
++    FuzzerSetRand();
++
++    ualarm(100000, 25000);
++
+     do_server(&accept_socket, host, port, socket_family, socket_type, protocol,
+               server_cb, context, naccept, bio_s_out);
+     print_stats(bio_s_out, ctx);
