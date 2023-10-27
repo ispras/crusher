@@ -1,0 +1,123 @@
+diff --git a/apps/s_client.c b/apps/s_client.c
+index a6c5a559a9..e4b2b34856 100644
+--- a/apps/s_client.c
++++ b/apps/s_client.c
+@@ -48,6 +48,42 @@ typedef unsigned int u_int;
+ #include "timeouts.h"
+ #include "internal/sockets.h"
+ 
++#include <openssl/rand.h>
++
++static int fuzz_bytes(unsigned char *buf, int num)
++{
++    unsigned char val = 1;
++
++    while (--num >= 0)
++        *buf++ = val++;
++    return 1;
++}
++
++static int fuzz_status(void)
++{
++    return 1;
++}
++
++static RAND_METHOD fuzz_rand_method = {
++        NULL,
++        fuzz_bytes,
++        NULL,
++        NULL,
++        fuzz_bytes,
++        fuzz_status
++};
++
++void FuzzerSetRand(void)
++{
++    RAND_set_rand_method(&fuzz_rand_method);
++}
++
++// client state flags
++uint8_t hs_done = 0;
++uint8_t reneg_start = 0;
++uint8_t reneg_done = 0;
++//
++
+ #if defined(__has_feature)
+ # if __has_feature(memory_sanitizer)
+ #  include <sanitizer/msan_interface.h>
+@@ -840,8 +876,19 @@ static int new_session_cb(SSL *s, SSL_SESSION *sess)
+     return 0;
+ }
+ 
++#include "../../mod-client-api/mod-client-api.h"
++
++#include <signal.h>
++
++void sig_handler(int signum){
++  printf("SIGALARM handler - exit\n");
++  exit(0);
++}
++
+ int s_client_main(int argc, char **argv)
+ {
++    signal(SIGALRM, sig_handler);
++
+     BIO *sbio;
+     EVP_PKEY *key = NULL;
+     SSL *con = NULL;
+@@ -2167,6 +2214,12 @@ int s_client_main(int argc, char **argv)
+     if (tfo)
+         BIO_printf(bio_c_out, "Connecting via TFO\n");
+  re_start:
++    custom_fork_server();
++
++    FuzzerSetRand();
++
++    ualarm(100000, 25000);
++
+     if (init_client(&sock, host, port, bindhost, bindport, socket_family,
+                     socket_type, protocol, tfo, !isquic, &peer_addr) == 0) {
+         BIO_printf(bio_err, "connect:errno=%d\n", get_last_socket_error());
+@@ -2924,6 +2977,8 @@ int s_client_main(int argc, char **argv)
+                 }
+ 
+                 print_stuff(bio_c_out, con, full_log);
++                hs_done = 1;
++
+                 if (full_log > 0)
+                     full_log--;
+ 
+@@ -3886,6 +3941,14 @@ static int user_data_execute(struct user_data_st *user_data, int cmd, char *arg)
+ static int user_data_process(struct user_data_st *user_data, size_t *len,
+                              size_t *off)
+ {
++
++    if (hs_done && !reneg_done) {
++        reneg_done = 1;
++        return user_data_execute(user_data, USER_COMMAND_RENEGOTIATE, NULL);
++    } if (reneg_done) {
++        return user_data_execute(user_data, USER_COMMAND_QUIT, NULL);
++    }
++
+     char *buf_start = user_data->buf + user_data->bufoff;
+     size_t outlen = user_data->buflen;
+ 
+diff --git a/crypto/packet.c b/crypto/packet.c
+index ac5c2e33f8..147dc1f563 100644
+--- a/crypto/packet.c
++++ b/crypto/packet.c
+@@ -207,9 +207,14 @@ int WPACKET_set_flags(WPACKET *pkt, unsigned int flags)
+     return 1;
+ }
+ 
++#include "../../mod-client-api/mod-client-api.h"
++
+ /* Store the |value| of length |len| at location |data| */
+ static int put_value(unsigned char *data, uint64_t value, size_t len)
+ {
++
++    value = mutate_int(value, len);
++
+     if (data == NULL)
+         return 1;
+ 

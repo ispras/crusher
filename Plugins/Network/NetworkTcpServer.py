@@ -11,11 +11,14 @@ class PyNetwork(object):
     def __init__(self, ip, port, delay):
         self.ip = ip
         self.port = port
-        self.delay = delay
+        self.delay = delay  # milliseconds
 
-    def send_data(self, data=None):
+    def send_data(self, data=None, delay=None):
         if data is None:
             return 42
+
+        self.delay = delay
+
         tries = 8
         # Create socket
         try:
@@ -33,7 +36,7 @@ class PyNetwork(object):
             print("Failed 'send_data'!")
             return False
         # Connect
-        sock.settimeout(self.delay)
+        sock.settimeout(float(self.delay) / 1000)
         start = int(round(time.time() * 1000))
         while True:
             try:

@@ -1,0 +1,24 @@
+{
+	"manager-options": {
+		"--dse-cores": 0,
+		"--wait-next-instance": 200,
+		"-t": 500
+	},
+
+	"instance-options": {
+		"--chroot": true,
+		"-I": "QemuUserArmForkSrv",
+		"-T": "stdin",
+		"--environment-plugin": "./plugins/env.py"
+	},
+
+	"fuzz-options": {
+		"--eat-sync": true
+	},
+
+	"eat-options": {
+		"--no-valgrind": true,
+		"--no-drmemory": true,
+		"--no-crash-critical": true
+	}
+}
