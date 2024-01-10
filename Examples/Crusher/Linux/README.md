@@ -17,7 +17,8 @@
 14) [c#](csharp) - фаззинг dll библиотек, написанных на C#, через файл и stdin;
 15) [nginx_docker](nginx_docker) - фаззинг сервера Nginx в Docker-режиме;
 16) [OpenSSL_mod_client](OpenSSL_mod_client) - фаззинг OpenSSL-сервера методом модифицированного клиента;
-17) [arm_rootfs_gzip](arm_rootfs_gzip) - фаззинг gzip из Ubuntu20 (ARM) с применением Qemu (user-mode).
+17) [arm_rootfs_gzip](arm_rootfs_gzip) - фаззинг gzip из Ubuntu20 (ARM) с применением Qemu (user-mode);
+17) [pytorch](pytorch) - фаззинг python-модуля pytorch.
 
 Далее приведена последовательность действий по фаззингу, мониторингу и воспроизведению аварийных завершений (крешей) для следующих примеров: `python`, `jasper` и `faad`.
 
