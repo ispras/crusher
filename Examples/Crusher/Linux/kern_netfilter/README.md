@@ -56,10 +56,11 @@
 
 ### 2.1.1. Описание таргета
 
-См. - [target4](target4)
+См. target4/
 
 **Ядро**
-См. [target4/kern](target4/kern)
+
+См. target4/kern/
 
 1. Код.
 Ядро 4.15.3 + модельные ошибки.
@@ -70,6 +71,7 @@ linux-4.15.3_instr_4/
 Собирать не требуется, готовое ядро - `linux-clean-bin/vmlinuz-4.15.3`
 
 **conntrack**
+
 См. target4/kern/conntrack-tools
 
 1. Код.
@@ -92,7 +94,7 @@ make
 Результат - бинарь `conntrack-tools/build/src/conntrack`
 
 **Запакованный таргет**
-[target4/target](target4/target)
+target4/target/
 
 Для фаззинга в nyx-режиме таргет требуется специальным образом подготовить (запаковать).
 Для этого предусмотрены т.н. пакеры.
@@ -143,10 +145,11 @@ make
 
 ### 2.2.1. Описание таргета
 
-См. [target7](target7)
+См. target7/
 
 **Ядро**
-См. [target7/kern](target7/kern)
+
+См. target7/kern/
 
 1. Код.
 Ядро 4.15.3 + патчи для снапшотов + встроенные ошибки.
@@ -169,7 +172,7 @@ $ ./intelpt_7.sh
 
 **Запакованный таргет**
 
-[target7/target](target7/target)
+target7/target/
 
 Аналогично предыдущему таргету, только `conntrack` не пропатченный, а оригинальный из системы.
 
