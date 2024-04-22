@@ -18,7 +18,8 @@
 15) [nginx_docker](nginx_docker) - фаззинг сервера Nginx в Docker-режиме;
 16) [OpenSSL_mod_client](OpenSSL_mod_client) - фаззинг OpenSSL-сервера методом модифицированного клиента;
 17) [arm_rootfs_gzip](arm_rootfs_gzip) - фаззинг gzip из Ubuntu20 (ARM) с применением Qemu (user-mode);
-17) [pytorch](pytorch) - фаззинг python-модуля pytorch.
+17) [pytorch](pytorch) - фаззинг python-модуля pytorch;
+18) [kern_netfilter](kern_netfilter) - фаззинг компонента ядра с использованием снимков памяти (снапшотов).
 
 Далее приведена последовательность действий по фаззингу, мониторингу и воспроизведению аварийных завершений (крешей) для следующих примеров: `python`, `jasper` и `faad`.
 
