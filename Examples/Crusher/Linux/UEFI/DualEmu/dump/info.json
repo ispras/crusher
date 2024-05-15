@@ -1,0 +1,29 @@
+{
+  "sections": {
+    "0x00000000": "mem.bin.part.1",
+    "0x04000000": "mem.bin.part.2"
+  },
+  "arch": "x8664",
+  "os": "linux",
+  "rootfs": "/path/to/rootfs",
+  "regs": {
+    "rax": "0x39aaa52",
+    "rbx": "0x39b34f0",
+    "rcx": "0x23",
+    "rdx": "0x0",
+    "rsi": "0x39a0abd",
+    "rdi": "0x3ab8260",
+    "rbp": "0x7e876d0",
+    "rsp": "0x7e876b8",
+    "r8": "0x1f36000",
+    "r9": "0x3ab8240",
+    "r10": "0x3ab8370",
+    "r11": "0x0",
+    "r12": "0x3ab8260",
+    "r13": "0x3ab88a0",
+    "r14": "0x0",
+    "r15": "0x39a51b6",
+    "rip": "0x39aaa52",
+    "eflags": "0x200246"
+  }
+}

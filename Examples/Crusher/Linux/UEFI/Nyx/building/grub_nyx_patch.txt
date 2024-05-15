@@ -1,0 +1,162 @@
+diff --git a/grub-core/kern/err.c b/grub-core/kern/err.c
+index 53c734de7..b68ba3e6d 100644
+--- a/grub-core/kern/err.c
++++ b/grub-core/kern/err.c
+@@ -22,6 +22,8 @@
+ #include <stdarg.h>
+ #include <grub/i18n.h>
+ 
++#include "nyx.h"
++
+ #define GRUB_ERROR_STACK_SIZE	10
+ 
+ grub_err_t grub_errno;
+@@ -101,6 +103,9 @@ grub_error_pop (void)
+ void
+ grub_print_error (void)
+ {
++#ifdef NYX_MODE
++  kAFL_hypercall(HYPERCALL_KAFL_RELEASE, 0);
++#endif
+   /* Print error messages in reverse order. First print active error message
+      and then empty error stack.  */
+   do
+diff --git a/grub-core/normal/main.c b/grub-core/normal/main.c
+index bd4431000..b79dde47a 100644
+--- a/grub-core/normal/main.c
++++ b/grub-core/normal/main.c
+@@ -35,6 +35,8 @@
+ #include <grub/script_sh.h>
+ #include <grub/bufio.h>
+ 
++#include <nyx.h>
++
+ GRUB_MOD_LICENSE ("GPLv3+");
+ 
+ #define GRUB_DEFAULT_HISTORY_SIZE	50
+@@ -439,6 +441,9 @@ static grub_err_t
+ grub_normal_read_line (char **line, int cont,
+ 		       void *data __attribute__ ((unused)))
+ {
++#ifdef NYX_MODE
++  kAFL_hypercall(HYPERCALL_KAFL_RELEASE, 0);
++#endif
+   return grub_normal_read_line_real (line, cont, 0);
+ }
+ 
+@@ -473,9 +478,11 @@ grub_cmdline_run (int nested, int force_auth)
+       grub_print_error ();
+       grub_errno = GRUB_ERR_NONE;
+ 
++#ifndef NYX_MODE
+       grub_normal_read_line_real (&line, 0, nested);
+       if (! line)
+ 	break;
++#endif
+ 
+       grub_normal_parse_line (line, grub_normal_read_line, NULL);
+       grub_free (line);
+diff --git a/grub-core/script/main.c b/grub-core/script/main.c
+index 854a25a06..cc6846ef8 100644
+--- a/grub-core/script/main.c
++++ b/grub-core/script/main.c
+@@ -21,14 +21,98 @@
+ #include <grub/parser.h>
+ #include <grub/script_sh.h>
+ 
++
++#include <nyx.h>
++
++#ifdef NYX_MODE
++
++typedef unsigned long long ull;
++
++#define PAGE_SIZE 0x1000
++#define MMAP_SIZE(x) ((x & ~(PAGE_SIZE - 1)) + PAGE_SIZE)
++#define U64(X) ((uint64_t)(X))
++
++static host_config_t host_config={0};
++static kAFL_payload *payload_buffer=NULL;
++
++static volatile int magic = 0;
++
++static void nyx_start (void)  {
++  hprintf ("Agent test\n");
++  
++  // initial handshake
++  kAFL_hypercall(HYPERCALL_KAFL_ACQUIRE, 0);
++  kAFL_hypercall(HYPERCALL_KAFL_RELEASE, 0);
++
++  /* Request information on available (host) capabilites (optional) */
++  kAFL_hypercall (HYPERCALL_KAFL_GET_HOST_CONFIG, (uintptr_t) & host_config);
++  hprintf ("[capablities] host_config.bitmap_size: 0x%x\n", host_config.bitmap_size);
++  hprintf ("[capablities] host_config.ijon_bitmap_size: 0x%x\n",  host_config.ijon_bitmap_size);
++  hprintf ("[capablities] host_config.payload_buffer_size: 0x%x\n",  host_config.payload_buffer_size);
++
++  /* Submit agent configuration */
++  agent_config_t agent_config = { 0 };
++  agent_config.agent_magic = NYX_AGENT_MAGIC;
++  agent_config.agent_version = NYX_AGENT_VERSION;
++  agent_config.agent_timeout_detection = 0;     /* timeout detection is implemented by the agent (currently not used)
++                                                 */
++  agent_config.agent_tracing = 0;       /* TRACE_BY_HOST */
++  agent_config.agent_ijon_tracing = 0;  /* set this flag to propagade that IJON
++                                           extension is implemented agent-wise */
++  agent_config.agent_non_reload_mode = 1;       /* Allow persistent */
++  agent_config.coverage_bitmap_size = host_config.bitmap_size;
++  kAFL_hypercall (HYPERCALL_KAFL_SET_AGENT_CONFIG, (uintptr_t) & agent_config);
++
++  /* Tell hypervisor the virtual address of the payload (input) buffer (call
++   * mlock to ensure that this buffer stays in the guest's memory)*/
++
++  payload_buffer = grub_zalloc(host_config.payload_buffer_size + PAGE_SIZE);
++  payload_buffer = (void*) ( (U64(payload_buffer) + PAGE_SIZE) & ~(U64(PAGE_SIZE) - 1) );
++  //memset(payload_buffer, 0, host_config.payload_buffer_size);
++
++  kAFL_hypercall (HYPERCALL_KAFL_GET_PAYLOAD, (uintptr_t) payload_buffer);
++  hprintf ("[init] payload buffer is mapped at %p\n", payload_buffer);
++
++  //uint64_t ptbuffer[3];
++  //ptbuffer[0]= 0x000123;
++  //ptbuffer[1]= 0x000456;
++  //ptbuffer[2]= 0;
++  //kAFL_hypercall(HYPERCALL_KAFL_RANGE_SUBMIT, (uint64_t) ptbuffer);
++
++/*
++  volatile uint64_t panic = ;
++  volatile uint64_t kasan = ;
++  kAFL_hypercall(HYPERCALL_KAFL_SUBMIT_PANIC, 0xffffffff810ea763);
++  kAFL_hypercall(HYPERCALL_KAFL_SUBMIT_KASAN, 0xffffffff81439f60);
++*/
++
++ /* Creates a root snapshot on first execution. Also we requested the next
++                              input with this hypercall */
++  kAFL_hypercall (HYPERCALL_KAFL_USER_FAST_ACQUIRE, 0);     // root snapshot
++}
++
++#endif
++
++
+ grub_err_t
+ grub_normal_parse_line (char *line,
+ 			grub_reader_getline_t getline, void *getline_data)
+ {
+   struct grub_script *parsed_script;
+ 
++  char *input_line = line;
++#ifdef NYX_MODE
++  nyx_start();
++  char *fuzz_line = grub_zalloc(payload_buffer->size + 1);
++  grub_memcpy(fuzz_line, payload_buffer->data, payload_buffer->size);
++  fuzz_line[payload_buffer->size] = '\0';
++  input_line = fuzz_line;
++#endif
+   /* Parse the script.  */
+-  parsed_script = grub_script_parse (line, getline, getline_data);
++  parsed_script = grub_script_parse (input_line, getline, getline_data);
++#ifdef NYX_MODE
++  kAFL_hypercall(HYPERCALL_KAFL_RELEASE, 0);
++#endif
+ 
+   if (parsed_script)
+     {
