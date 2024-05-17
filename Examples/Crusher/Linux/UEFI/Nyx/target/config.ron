@@ -1,0 +1,40 @@
+
+#![enable(implicit_some)]
+(
+  include_default_config_path: "/path/to/target/default.ron",
+
+  runner: QemuGeneric((
+    args: [
+      "/path/to/crusher/nyx_mode/QEMU-Nyx/x86_64-softmmu/qemu-system-x86_64",
+      "-enable-kvm",
+      "-bios", "/path/to/ovmf.fd",
+      "-cdrom", "/path/to/boot.img",
+      "-pt-intel-decoder",
+    ]
+  )),
+
+  fuzz: (
+    workdir_path: "/tmp/workdir",
+    mem_limit: 4096,
+    seed_path: "",
+    dict: [
+    ],
+    ip0: (
+      a: 0x03000000,
+      b: 0x04000000,
+    ),
+    ip1: (
+      a: 0,
+      b: 0,
+    ),
+    ip2: (
+      a: 0,
+      b: 0,
+    ),
+    ip3: (
+      a: 0,
+      b: 0,
+    ),
+  ),
+)
+

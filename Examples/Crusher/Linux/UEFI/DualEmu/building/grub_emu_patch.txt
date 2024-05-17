@@ -1,0 +1,43 @@
+diff --git a/grub-core/normal/main.c b/grub-core/normal/main.c
+index bd4431000..add9a1ad4 100644
+--- a/grub-core/normal/main.c
++++ b/grub-core/normal/main.c
+@@ -371,6 +371,10 @@ grub_cmd_normal_exit (struct grub_command *cmd __attribute__ ((unused)),
+   return GRUB_ERR_NONE;
+ }
+ 
++static grub_err_t
++grub_normal_read_line (char **line, int cont,
++		       void *data __attribute__ ((unused)));
++
+ static grub_err_t
+ grub_normal_reader_init (int nested)
+ {
+@@ -386,6 +390,16 @@ grub_normal_reader_init (int nested)
+   if (!msg_formatted)
+     return grub_errno;
+ 
++  typedef unsigned long long ull;
++
++  char *addr_info = grub_xasprintf(
++    _("&grub_normal_read_line = 0x%llX, "
++      "&grub_print_error = 0x%llX, "
++      "&grub_script_parse = 0x%llX "),
++    (ull) &grub_normal_read_line,
++    (ull) &grub_print_error,
++    (ull) &grub_script_parse);
++
+   FOR_ACTIVE_TERM_OUTPUTS(term)
+   {
+     grub_normal_init_page (term, 1);
+@@ -398,6 +412,10 @@ grub_normal_reader_init (int nested)
+     grub_putcode ('\n', term);
+     grub_putcode ('\n', term);
+     grub_putcode ('\n', term);
++    grub_print_message_indented (addr_info, 0, 0, term);
++    grub_putcode ('\n', term);
++    grub_putcode ('\n', term);
++    grub_putcode ('\n', term);
+   }
+   grub_free (msg_formatted);
+ 
