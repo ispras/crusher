@@ -2,6 +2,7 @@ from pathlib import Path
 import dual_emu
 import os, sys
 import json
+import qiling
 
 def entry_hook(emu):
     print('Entry Hook')
@@ -15,6 +16,13 @@ def entry_hook(emu):
 
 dump_path = Path(__file__).parent / 'dump' / 'info.json'
 args = dual_emu.parse_args_cli(input_file_required=True)
+
+orig_qiling = qiling.Qiling
+def wrap_qiling(*args, **kw):
+    ql = orig_qiling(*args, **kw)
+    ql.mem.unmap_all() # to remove unneeded internal mappings
+    return ql
+qiling.Qiling = wrap_qiling
 
 # return address, grub_normal_read_line, grub_print_error
 ex = [0x39AA24E, 0x39A0ABD, 0x5E1D638]
