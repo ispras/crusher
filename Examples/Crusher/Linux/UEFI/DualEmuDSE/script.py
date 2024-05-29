@@ -2,6 +2,7 @@ from pathlib import Path
 import dual_emu
 import os, sys
 import json
+import qiling
 
 def entry_hook(emu):
     print('Entry Hook')
@@ -13,6 +14,21 @@ def entry_hook(emu):
 
 dump_path = Path(__file__).parent / 'dump' / 'info.json'
 args = dual_emu.parse_args_cli(input_file_required=True)
+
+arch_name = None
+if args.qiling:
+    arch_name = "x8664"
+if args.angr:
+    arch_name = "x86_64"
+# set the "arch" field in the config
+os.system(f'sed -i \' s/"arch":.*/"arch": "{arch_name}",/ \' dump/info.json')
+
+orig_qiling = qiling.Qiling
+def wrap_qiling(*args, **kw):
+    ql = orig_qiling(*args, **kw)
+    ql.mem.unmap_all() # to remove unneeded internal mappings
+    return ql
+qiling.Qiling = wrap_qiling
 
 # return address
 ex = [0x6896635]
