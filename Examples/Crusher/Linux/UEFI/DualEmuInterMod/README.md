@@ -96,4 +96,40 @@ dump memory mem.40000000 0x40000000 0x40020000
 rm -rf out; /path/to/crusher/bin_x86-64/fuzz_manager --start 4 --eat-cores 1 --dse-cores 1 -i ./in -o ./out -I dualemu -T dualemu -t 5000 -- ./script.py
 ```
 
+### Просмотр покрытия кода
+
+Покрытие кода, достигнутое в результате фаззинга, можно посмотреть наглядно.
+Инструмент генерирует отчёты о покрытии в формате Lighthouse,
+которые можно посмотреть, например, в дизассемблере Ghidra.
+
+Сначала нужно скачать необходимые файлы:
+* Дизассемблер Ghidra (версия 11.0.2): https://github.com/NationalSecurityAgency/ghidra/releases/download/Ghidra_11.0.2_build/ghidra_11.0.2_PUBLIC_20240326.zip
+* Соответствующий плагин для отображения покрытия: https://github.com/nccgroup/Cartographer/releases/download/v1.0.1/ghidra_11.0.2_Cartographer.zip
+
+Для запуска нужна подходящая версия Java:
+```
+sudo apt install openjdk-17-jdk openjdk-17-jre
+```
+
+Чтобы запустить Ghidra, нужно распаковать архив и запустить `./ghidraRun`.
+Чтобы установить плагин, нужно в стартовом окне использовать `File > Install Extensions`
+и подать скачанный zip-файл плагина.
+
+Нужно создать проект и импортировать исследуемый бинарный файл (`Shell.debug`).
+
+После работы фаззера отчёты о покрытии находятся в папке `out`:
+например, файл `out/EAT_OUT/results/queue/000000/lighthouse`
+описывает покрытие при запуске на образце входных данных номер `000000`.
+Можно собрать все эти файлы покрытия в одну папку (например, `dir_cov`)
+и запустить скрипт для слияния этих файлов в один отчёт:
+
+```
+./crusher/bin_x86-64/python-2.7/bin/python ./LighthouseSum.pyc --input ./dir_cov --out ./file.cov --system Linux --select-region 0x48cf5000-0x48d65000 --rename-module Shell.debug --enum-module-table
+```
+
+В команде указан диапазон адресов, где в памяти расположен код целевого UEFI-модуля ("Shell").
+После этого полученный файл `file.cov` можно загрузить в Ghidra
+(в окне дизассемблера: `Tools > Code Coverage > Load Code Coverage File(s)...`).
+В результате покрытые фрагменты кода будут раскрашены цветом.
+
 
