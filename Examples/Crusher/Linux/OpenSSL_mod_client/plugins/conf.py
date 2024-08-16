@@ -1,8 +1,5 @@
 """
-This configurator script provides for firefox unique value of "-P" (profile) option.
-This avoids conflicts when multiple firefox instances are running.
-We assume that these profiles already exist - they must be created manually or with environment script (env.py),
-which is run before this script.
+This configurator script provides differential fuzzing by replacing of target binaries in some instances with sanitized ones.
 """
 
 import json
