@@ -196,8 +196,7 @@ $ git checkout 5c3c8369f3b42ce4b816606bb9bbad00c664a416
     value = mutate_int(value, len);
 ```
 
-Также необходимо скопировать `mod-client-api/` в `openssl/`
-и добавить соответствующий include в файлы с мутациями.
+Также необходимо скопировать `crusher/mod-client-api/` в `openssl/` и добавить соответствующий include в файлы с мутациями.
 
 Все патчи - см. `client/client.patch`. Применим их:
 ```shell
@@ -210,8 +209,7 @@ $ git apply ../client.patch
 ```shell
 $ make clean && make distclean
 $ ./config no-shared no-tests
-# В Makefile в правило для сборки цели apps/openssl в конце добавить mod-client-api/libmodclient.a
-$ make -j
+$ make -j EX_LIBS=./mod-client-api/libmodclient.a
 $ cp apps/openssl ../openssl-clean
 ```
 
