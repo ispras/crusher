@@ -1,5 +1,5 @@
 diff --git a/apps/s_client.c b/apps/s_client.c
-index a6c5a559a9..e4b2b34856 100644
+index a6c5a559a9..96ec761687 100644
 --- a/apps/s_client.c
 +++ b/apps/s_client.c
 @@ -48,6 +48,42 @@ typedef unsigned int u_int;
@@ -49,7 +49,7 @@ index a6c5a559a9..e4b2b34856 100644
      return 0;
  }
  
-+#include "../../mod-client-api/mod-client-api.h"
++#include "../mod-client-api/mod-client-api.h"
 +
 +#include <signal.h>
 +
@@ -103,14 +103,14 @@ index a6c5a559a9..e4b2b34856 100644
      size_t outlen = user_data->buflen;
  
 diff --git a/crypto/packet.c b/crypto/packet.c
-index ac5c2e33f8..147dc1f563 100644
+index ac5c2e33f8..6bece6a57f 100644
 --- a/crypto/packet.c
 +++ b/crypto/packet.c
 @@ -207,9 +207,14 @@ int WPACKET_set_flags(WPACKET *pkt, unsigned int flags)
      return 1;
  }
  
-+#include "../../mod-client-api/mod-client-api.h"
++#include "../mod-client-api/mod-client-api.h"
 +
  /* Store the |value| of length |len| at location |data| */
  static int put_value(unsigned char *data, uint64_t value, size_t len)

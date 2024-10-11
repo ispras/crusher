@@ -118,7 +118,7 @@ target4/target/
 
 ```shell
 ./crusher/bin_x86-64/fuzz_manager --start 20 -i in -o out \
-  -I nyx -F --affinity --max-file-size 1 \
+  -I nyx -F --max-file-size 1 \
   --wait-next-instance 1000 -- ./target/ __DATA__
 ```
 
@@ -128,7 +128,6 @@ target4/target/
 - `-o <path>` - папка с результатами;
 - `-I <type>` - тип инструментации;
 - `-F` - очищать папку с предыдущими результатами;
-- `--affinity` - привязка процессов (fuzz, eat) к определённым ядрам;
 - `--max-file-size <megabytes>` - ограничение на входные данные;
 - `--wait-next-instance <milliseconds>` - ожидание перед запуском каждого fuzz/eat процесса.
 
@@ -191,7 +190,7 @@ target7/target/
 
 ```shell
 ./crusher/bin_x86-64/fuzz_manager --start 10 -i in -o out \
-  -I nyx -F --affinity --max-file-size 1 \
+  -I nyx -F --max-file-size 1 \
   --wait-next-instance 1000 -- ./target/ __DATA__
 ```
 

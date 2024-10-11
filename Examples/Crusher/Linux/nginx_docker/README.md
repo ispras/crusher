@@ -29,7 +29,7 @@ docker build --network host -f Dockerfile . -t nginx-demo
     -t 10000 --wait-next-instance 2000 -F \
     --clean-binary /root/target/nginx-clean/sbin/nginx \
     --bitmap-size 65536 \
-    -- /target/new_nginx/nginx_build/sbin/nginx
+    -- /root/target/nginx-fuzz/sbin/nginx
 ```
 
 Здесь используются следующие опции фаззера:
