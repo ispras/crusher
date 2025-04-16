@@ -1,20 +1,26 @@
 import atheris
 import sys
 from pathlib import Path
-import os
 
 
 with atheris.instrument_imports():
     import pdfquery
-    from pdfquery.cache import FileCache
+
+uncaught_exceptions = (MemoryError, KeyboardInterrupt, RecursionError, AssertionError)
+
+def test():
+    pdf = pdfquery.PDFQuery(Path(str(sys.argv[-1])))
+    pdf.load()
+
 
 @atheris.instrument_func
 def TestOneInput():
-    pdf = pdfquery.PDFQuery(Path(str(sys.argv[-1])))
-    pdf.load()
-    os._exit(0)
-
-
+    try:
+        test()
+    except Exception as e:
+        if isinstance(e, uncaught_exceptions):
+            raise
+        print(f"Caught exception: {e}")
 
 if __name__ == "__main__":
-    atheris.Run(TestOneInput)
+    atheris.Crusher(TestOneInput)
