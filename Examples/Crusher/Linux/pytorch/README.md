@@ -6,46 +6,51 @@
 
 Вызов `atheris.instrument_imports()` обеспечивает инструментацию модуля `torch`, а декоратор `atheris.instrument_func` - ф-ции `TestOneInput`.
 
+Корпус начальных входных данных состоит из файла `model` - сериализованной PyTorch-модели, созданной на основе [данного примера](https://pytorch.org/tutorials/beginner/saving_loading_models.html)
+
 Подробнее про фаззинг приложений на языке Python - см. раздел "Инструментация Python" в документации к Crusher.
 
 ## 2. Подготовка к фаззингу
 
 ### 2.1. Сборка докер-образа.
 
-Фаззинг будет проводиться в докер-контейнере на основе образа, собранного следующей командой:
+Фаззинг будет проводиться в докер-контейнере на основе образа `pytorch-fuzz:latest`, собранного следующей командой:
 ```shell
-$ docker build -f Dockerfile -t pytorch-fuzz .
+$ ./docker/docker_build.sh
 ```
-
-В докер устанавливаются зависимости, а также копируются необходимые для фаззинга файлы, включая фаззинг-цель и корпус начальных входных данных, который состоит из файла `model` - сериализованная PyTorch-модель, созданная на основе данного примера - https://pytorch.org/tutorials/beginner/saving_loading_models.html
 
 ### 2.2. Подготовка докер-контейнера:
 
-1. Создание контейнера:
+1. Создать контейнер (укажите актуальный путь до директории `crusher`):
 ```shell
-$ docker run --name pytorch-fuzz --rm --privileged \
-  --network host -e LANG=C.UTF-8 -e LC_ALL=C.UTF-8 \
-  -v /path/to/crusher/:/opt/crusher \
-  -ti pytorch-fuzz:latest /bin/bash
+$ /docker/docker_run.sh <crusher_dir> [hasp_ip]
+```
+где:
+- `crusher_dir` - директория `crusher/` (обязательная опция)
+- `hasp_ip` - IP сервера лицензий (необязательная опция)
+
+2. Установить адаптированный для крашера `atheris`:
+```shell
+$ /opt/crusher/tools/install_atheris.sh /usr/bin/python3
 ```
 
-Обратите внимание, что в контейнер монтируется директория с фаззером в качестве докер-вольюма (`-v`).
-
-
-2. Необходимо дополнительно установить atheris (с применением соответствующих патчей) в python3 фаззера и зависимости фаззинг-цели:
+3. Установить библиотеки `torch` (объект анализа) и `numpy` в `python3`:
 ```shell
-$ /opt/crusher/tools/install_atheris.sh
-$ /opt/crusher/bin_x86-64/python-3.9_x86_64/bin/pip3 install numpy torch
+$ pip3 install torch numpy
 ```
 
 ## 3. Фаззинг
 
-1. Запуск фаззинга.
+1. Проверка фаззинг-цели.
+Запустите на начальном файле и убедитесь, что таргет работает корректно и выводится информация об инструментации (`INFO: Instrumenting ...`):
+```shell
+$ python3 torch_load_fuzz.py in/model
+```
+
+2. Запуск фаззинга.
 
 ```shell
-$ /opt/crusher/bin_x86-64/fuzz_manager --start 4 --eat-cores 2 \
-  --dse-cores 0 -I pyinst -i in/ -o out -t 120000 \
-  -- ./torch_load_fuzz.py @@
+$ ./fuzz.sh
 ```
 
 Опции фаззера:
@@ -60,14 +65,20 @@ $ /opt/crusher/bin_x86-64/fuzz_manager --start 4 --eat-cores 2 \
 
 В данном примере указан довольно большой таймаут, т.к. инструментация фаззинг-цели выполняется долго, но только 1 раз - в начале фаззинга.
 
-2. Мониторинг.
+3. Мониторинг.
 
-Запустите в другом терминале `UI` фаззера:
+Запустите в другом терминале `UI` фаззера (укажите актуальные пути):
 ```shell
-$ docker exec -ti pytorch-fuzz /bin/bash
-$ /opt/crusher/bin_x86-64/ui -o out
+$ sudo /path/to/crusher/bin_x86-64/ui -o out
 ```
 
 Как только будут найдены необработанные исключения, значение поля `unique_crashes` (в окне `UI` - наверху справа) станет ненулевым.
 
-Прервать фаззинг (в первом терминале, `Ctrl + С`).
+4. Анализ результатов.
+
+Пример воспроизведения найденного исключения:
+```shell
+$ python3 torch_load_fuzz.py out/EAT_OUT/crashes/id_crash_000000 
+```
+
+Прервать фаззинг можно по `Ctrl + С` (1-й терминал) или через UI.

@@ -12,7 +12,6 @@ def test():
     pdf = pdfquery.PDFQuery(Path(str(sys.argv[-1])))
     pdf.load()
 
-
 @atheris.instrument_func
 def TestOneInput():
     try:
@@ -21,6 +20,7 @@ def TestOneInput():
         if isinstance(e, uncaught_exceptions):
             raise
         print(f"Caught exception: {e}")
+
 
 if __name__ == "__main__":
     atheris.Crusher(TestOneInput)
