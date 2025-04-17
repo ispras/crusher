@@ -42,6 +42,7 @@ $ pip3 install pdfquery six
 1. Проверка фаззинг-цели.
 Запустите на начальном файле и убедитесь, что таргет работает корректно и выводится информация об инструментации (`INFO: Instrumenting ...`):
 ```shell
+$ cd /path/to/python_fuzz
 $ python3 testpdf.py in/ccitt.pdf
 ```
 
@@ -64,7 +65,7 @@ $ ./fuzz.sh
 
 Запустите в другом терминале `UI` фаззера (укажите актуальные пути):
 ```shell
-$ sudo /path/to/crusher/bin_x86-64/ui -o out
+$ sudo -E /path/to/crusher/bin_x86-64/ui -o out
 ```
 
 Как только будут найдены необработанные исключения, значение поля `unique_crashes` (в окне `UI` - наверху справа) станет ненулевым.

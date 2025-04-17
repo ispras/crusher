@@ -44,6 +44,7 @@ $ pip3 install torch numpy
 1. Проверка фаззинг-цели.
 Запустите на начальном файле и убедитесь, что таргет работает корректно и выводится информация об инструментации (`INFO: Instrumenting ...`):
 ```shell
+$ cd /path/to/pytorch
 $ python3 torch_load_fuzz.py in/model
 ```
 
