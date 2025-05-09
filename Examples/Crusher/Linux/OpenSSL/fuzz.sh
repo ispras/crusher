@@ -1,25 +1,7 @@
 #!/bin/bash
 
-if [[ "$#" -ne 4 ]]; then
-    echo "Error: not enough arguments"
-    echo "Usage: ./fuzz.sh -f <path/to/crusher/bin_x86-64/fuzz_manager> -c <cores count>"
-    exit 1
-fi
+export ISP_PRELOAD=$WORK_DIR/custom_lib/custom_lib.so
 
-FUZZMANAGER=$2
-CORES=$4
-
-clean_result () {
-    rm -f -r out
-}
-
-# Test python
-
-echo ""
-echo "OpenSSL analysis"
-echo ""
-clean_result
-
-COMMAND="$FUZZMANAGER --start $CORES --eat-cores 1 --dse-cores 0 -T File -I StaticForkSrv -t 2000 -o out --peach-pit $PWD/ClientHello.xml -F -i in -- $PWD/openssl/bin/openssl s_server -cert $PWD/keys/cert.pem -key $PWD/keys/key.pem -accept 1111 -www -naccept 1"
-echo $COMMAND
-$COMMAND
+/opt/crusher/bin_x86-64/fuzz_manager --start 8 --eat-cores 2 --dse-cores 0 \
+                                     -I StaticForkSrv --peach-pit ClientHello.xml \
+                                     -i in -o out -- $WORK_DIR/openssl-1.1.0a/apps/openssl s_server -cert $WORK_DIR/keys/cert.pem -key $WORK_DIR/keys/key.pem -accept 2000 -www -naccept 1
