@@ -40,10 +40,10 @@ COPY custom_lib $WORK_DIR/custom_lib
 RUN cd custom_lib \
     && make -j
 
-## Настройка лицензии
-#RUN echo 'deb https://repo.ispras.ru/apt /' | tee /etc/apt/sources.list.d/ispras.list \
-#    && wget -q -O - https://repo.ispras.ru/apt/key.asc | apt-key add - \
-#    && apt update -y \
-#    && apt install -y aksusbd
-#COPY setup_license.sh /opt/setup_license.sh
-#RUN echo "/opt/setup_license.sh 101213 36343" >> ~/.bashrc
+# Настройка лицензии
+RUN echo 'deb https://repo.ispras.ru/apt /' | tee /etc/apt/sources.list.d/ispras.list \
+    && wget -q -O - https://repo.ispras.ru/apt/key.asc | apt-key add - \
+    && apt update -y \
+    && apt install -y aksusbd
+COPY docker/setup_license.sh /opt/setup_license.sh
+RUN echo "/opt/setup_license.sh 101213 36343" >> ~/.bashrc
