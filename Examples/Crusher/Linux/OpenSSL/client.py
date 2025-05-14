@@ -9,13 +9,6 @@ import argparse
 import os
 
 if __name__ == '__main__':
-    #parser = argparse.ArgumentParser(description="Sender")
-    #parser.add_argument("--ip", "-i", dest="ip", help="ip", required=True)
-    #parser.add_argument("--port", "-p", dest="port", help="port", required=True)
-    #parser.add_argument("--input", "-i", dest="crash_path", help="crash file path", required=True)
-    #args = parser.parse_known_args(sys.argv)
-    #args = args[0]
-
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     s.connect(("127.0.0.1", 2000))
