@@ -29,8 +29,8 @@
     "-Djava.util.logging.manager=org.jboss.logmanager.LogManager",
     "-Dquarkus-log-max-startup-records=10000",
 
-    "-Dkc.home.dir=/root/fuzz/keycloak-26.0.7/",
-    "-Djboss.server.config.dir=/root/fuzz/keycloak-26.0.7/conf"
+    "-Dkc.home.dir=/home/keycloak/keycloak-26.0.7/",
+    "-Djboss.server.config.dir=/home/keycloak/keycloak-26.0.7/conf"
 
   ]
 }
