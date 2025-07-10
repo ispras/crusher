@@ -1,0 +1,36 @@
+{
+  "jvm_options": [
+    "-Dkc.config.built=true",
+    "-Xms64m",
+    "-Xmx512m",
+    "-XX:MetaspaceSize=96M",
+    "-XX:MaxMetaspaceSize=256m",
+    "-Dfile.encoding=UTF-8",
+    "-Dsun.stdout.encoding=UTF-8",
+    "-Dsun.err.encoding=UTF-8",
+    "-Dstdout.encoding=UTF-8",
+    "-Dstderr.encoding=UTF-8",
+
+    "-XX:+ExitOnOutOfMemoryError",
+    "-Djava.security.egd=file:/dev/urandom",
+    "-XX:+UseParallelGC",
+    "-XX:MinHeapFreeRatio=10",
+    "-XX:MaxHeapFreeRatio=20",
+
+    "-XX:GCTimeRatio=4",
+    "-XX:AdaptiveSizePolicyWeight=90",
+
+    "-XX:FlightRecorderOptions=stackdepth=512",
+
+    "--add-opens=java.base/java.util=ALL-UNNAMED",
+    "--add-opens=java.base/java.util.concurrent=ALL-UNNAMED",
+    "--add-opens=java.base/java.security=ALL-UNNAMED",
+
+    "-Djava.util.logging.manager=org.jboss.logmanager.LogManager",
+    "-Dquarkus-log-max-startup-records=10000",
+
+    "-Dkc.home.dir=/path/to/keycloak-26.0.7/",
+    "-Djboss.server.config.dir=/path/to/keycloak-26.0.7/conf"
+
+  ]
+}
