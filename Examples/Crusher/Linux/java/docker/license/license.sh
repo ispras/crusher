@@ -4,6 +4,6 @@
 
 sleep 5
 
-sudo su - keycloak
+# sudo su - keycloak
 
 #echo core >/proc/sys/kernel/core_pattern
