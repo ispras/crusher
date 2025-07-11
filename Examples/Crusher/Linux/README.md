@@ -12,7 +12,7 @@
 9) [qiling](qiling) - фаззинг с частичной эмуляцией с помощью Qiling;
 10) [unicorn](unicorn) - фаззинг с помощью эмулятора Unicorn;
 11) [partial_emulation](partial_emulation) - пример частичной эмуляции с помощью модуля DualEmu, комбинирующего фаззинг с помощью unicornafl и DSE с Angr;
-12) [java](java) - фаззинг JAVA приложения через файл;
+12) [java](java) - фаззинг Keycloak;
 13) [python_fuzz](python_fuzz) - фаззинг библиотеки на языке python;
 14) [c#](csharp) - фаззинг dll библиотек, написанных на C#, через файл и stdin;
 15) [nginx_docker](nginx_docker) - фаззинг сервера Nginx в Docker-режиме;
