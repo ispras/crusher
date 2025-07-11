@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 
 /usr/sbin/hasplmd_x86_64 -s
 
