@@ -3,7 +3,8 @@ FROM ubuntu:jammy
 
 # Install deps
 RUN apt update -y \
-    && apt install -y libglib2.0-0 openjdk-17-jdk git maven nano gnupg2 wget sudo
+    && apt install -y libglib2.0-0 openjdk-17-jdk git maven nano gnupg2 wget sudo \
+    && rm -rf /var/lib/apt/lists/*
 
 # Setup env
 ARG USER_NAME
