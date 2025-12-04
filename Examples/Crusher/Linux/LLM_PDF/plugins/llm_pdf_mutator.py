@@ -155,4 +155,5 @@ class LlmPdfMutator:
             new_pdf = extract_pdf(response)
             valid = check_pdf(new_pdf)
             cnt += 1
+        new_pdf = bytearray(new_pdf, "utf-8")
         return new_pdf

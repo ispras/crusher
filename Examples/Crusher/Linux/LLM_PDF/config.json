@@ -1,10 +1,12 @@
 {
-  "mutation": ["llm_pdf_mutator",
+  "mutation": [
+    "llm_pdf_mutator",
     "bflip",
     "arit",
     "ival",
     "aext",
     "splice_with_havoc",
     "fstring"
-  ]
+  ],
+  "run_after_mutation": ["llm_pdf_mutator"]
 }
