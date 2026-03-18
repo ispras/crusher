@@ -1,28 +1,5 @@
 #!/bin/bash
 
-if [[ "$#" -ne 4 ]]; then
-    echo "Error: not enough arguments"
-    echo "Usage: ./fuzz.sh -f <path/to/crusher/bin_x86-64/fuzz_manager> -c <cores count>"
-    exit 1
-fi
+echo core >/proc/sys/kernel/core_pattern
 
-FUZZMANAGER=$2
-CORES=$4
-
-clean_result () {
-    rm -f -r out
-    rm -f -r Out_tmp
-}
-
-# Test jasper
-
-echo ""
-echo "jasper analysis"
-echo ""
-clean_result
-
-COMMAND="$FUZZMANAGER --start $CORES --eat-cores 1 --dse-cores 1 -i in -o out -- ./jasper -f __DATA__ -t mif -F Out_tmp -T mif"
-echo $COMMAND
-$COMMAND
-
-
+/opt/crusher/bin_x86-64/fuzz_manager --start 4 --eat-cores 2 --dse-cores 1 --wait-next-instance 500 -I StaticForkSrv --bitmap-size 65536 --clean-binary /root/fuzz/jasper-clean/bin/jasper --coverage-binary /root/fuzz/jasper-cov/bin/jasper -i in -o out -F -- /root/fuzz/jasper-fuzz/bin/jasper -f @@ -t mif -F Out_tmp -T mif
