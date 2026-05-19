@@ -10,7 +10,7 @@
 6) [C#: AngleSharp](csharp) - фаззинг C#-библиотеки AngleSharp;
 7) [User-mode emulation (x86_64): python](python) - фаззинг бинарного приложения python;
 8) [User-mode emulation (ARM): gzip](arm_rootfs_gzip) - фаззинг gzip из Ubuntu20 (ARM) с применением Qemu (user-mode);
-9) [Argv: faad](faad) - фаззинг faad через аргументы командной строки; TODO
+9) [Argv: faad](faad) - фаззинг faad через аргументы командной строки;
 10) [Network: OpenSSL](OpenSSL-base) - фаззинг OpenSSL-сервера: Peach Pit + ISP_PRELOAD;
 11) [Network (complex): OpenSSL](OpenSSL) - фаззинг OpenSSL: датчики состояний + метод модифицированного клиента с применением инструментирующего компилятора `ISP-Circea`;
 12) [Network + docker: Nginx](nginx_docker) - фаззинг сервера Nginx в Docker-режиме;
