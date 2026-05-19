@@ -1,0 +1,96 @@
+diff --git a/apps/s_server.c b/apps/s_server.c
+index 0ba75999fd..a8b20c04f4 100644
+--- a/apps/s_server.c
++++ b/apps/s_server.c
+@@ -60,6 +60,36 @@ typedef unsigned int u_int;
+ #endif
+ #include "internal/sockets.h"
+ 
++#include <openssl/rand.h>
++
++static int fuzz_bytes(unsigned char *buf, int num)
++{
++  unsigned char val = 1;
++
++  while (--num >= 0)
++    *buf++ = val++;
++  return 1;
++}
++
++static int fuzz_status(void)
++{
++  return 1;
++}
++
++static RAND_METHOD fuzz_rand_method = {
++        NULL,
++        fuzz_bytes,
++        NULL,
++        NULL,
++        fuzz_bytes,
++        fuzz_status
++};
++
++void FuzzerSetRand(void)
++{
++  RAND_set_rand_method(&fuzz_rand_method);
++}
++
+ static int not_resumable_sess_cb(SSL *s, int is_forward_secure);
+ static int sv_body(int s, int stype, int prot, unsigned char *context);
+ static int www_body(int s, int stype, int prot, unsigned char *context);
+@@ -970,8 +1000,17 @@ const OPTIONS s_server_options[] = {
+  (o == OPT_SSL3 || o == OPT_TLS1 || o == OPT_TLS1_1 || o == OPT_TLS1_2 \
+   || o == OPT_TLS1_3 || o == OPT_DTLS || o == OPT_DTLS1 || o == OPT_DTLS1_2)
+ 
++#include <signal.h>
++
++void sig_handler(int signum){
++  printf("SIGALARM handler - exit\n");
++  exit(0);
++}
++
+ int s_server_main(int argc, char *argv[])
+ {
++    signal(SIGALRM, sig_handler);
++
+     ENGINE *engine = NULL;
+     EVP_PKEY *s_key = NULL, *s_dkey = NULL;
+     SSL_CONF_CTX *cctx = NULL;
+@@ -2152,6 +2191,17 @@ int s_server_main(int argc, char *argv[])
+         && unlink_unix_path)
+         unlink(host);
+ #endif
++
++#ifdef __AFL_HAVE_MANUAL_CONTROL
++    __AFL_INIT();
++#endif
++
++    FuzzerSetRand();
++
++    if (getenv("FUZZ")) {
++        // ualarm(100000, 25000);
++    }
++
+     do_server(&accept_socket, host, port, socket_family, socket_type, protocol,
+               server_cb, context, naccept, bio_s_out);
+     print_stats(bio_s_out, ctx);
+diff --git a/crypto/bio/b_sock2.c b/crypto/bio/b_sock2.c
+index 335dfabc61..4d4b21fc46 100644
+--- a/crypto/bio/b_sock2.c
++++ b/crypto/bio/b_sock2.c
+@@ -157,6 +157,14 @@ int BIO_bind(int sock, const BIO_ADDR *addr, int options)
+     }
+ # endif
+ 
++    struct linger sl;
++    sl.l_onoff  = 1;  // включить linger
++    sl.l_linger = 0;  // 0 секунд -> RST, мгновенное закрытие
++
++    if (setsockopt(sock, SOL_SOCKET, SO_LINGER, &sl, sizeof(sl)) < 0) {
++      perror("setsockopt(SO_LINGER)");
++    }
++
+     if (bind(sock, BIO_ADDR_sockaddr(addr), BIO_ADDR_sockaddr_size(addr)) != 0) {
+         SYSerr(SYS_F_BIND, get_last_socket_error());
+         BIOerr(BIO_F_BIO_BIND, BIO_R_UNABLE_TO_BIND_SOCKET);
