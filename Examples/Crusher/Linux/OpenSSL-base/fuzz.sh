@@ -1,5 +1,6 @@
 #!/bin/bash
 
+echo core >/proc/sys/kernel/core_pattern
 export ISP_PRELOAD=$WORK_DIR/custom_lib/custom_lib.so
 
 /opt/crusher/bin_x86-64/fuzz_manager --start 8 --eat-cores 2 --dse-cores 0 \

@@ -16,9 +16,10 @@ RUN apt update \
 # Сборка компилятора для инструментации OpenSSL
 RUN apt install -y make llvm
 
-RUN git clone --depth 1 --branch v4.10c https://github.com/AFLplusplus/AFLplusplus \
+RUN git clone --depth 1 --branch v4.40c https://github.com/AFLplusplus/AFLplusplus \
     && cd AFLplusplus \
-    && make -j
+    && make -j \
+    && make install
 
 # Сборка OpenSSL с инструментацией
 # sed -i "s/'File::Glob' => qw\/glob\/;/'File::Glob' => qw\/:glob\/;/" test/build.info
@@ -27,7 +28,7 @@ RUN wget https://github.com/openssl/openssl/releases/download/OpenSSL_1_1_0a/ope
     && cd openssl-1.1.0a \
     && sed -i "s/'File::Glob' => qw\/glob\/;/'File::Glob' => qw\/:glob\/;/" Configure \
     && sed -i "s/'File::Glob' => qw\/glob\/;/'File::Glob' => qw\/:glob\/;/" test/build.info \
-    && export CC=$WORK_DIR/AFLplusplus/afl-clang-fast \
+    && export CC=afl-clang-fast \
     && ./config no-shared \
     && make -j
 
