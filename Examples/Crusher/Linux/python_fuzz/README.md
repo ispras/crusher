@@ -21,7 +21,7 @@ $ ./docker/docker_build.sh
 
 1. Создать контейнер (укажите актуальный путь до директории `crusher`):
 ```shell
-$ /docker/docker_run.sh <crusher_dir> [hasp_ip]
+$ ./docker/docker_run.sh <crusher_dir> [hasp_ip]
 ```
 где:
 - `crusher_dir` - директория `crusher/` (обязательная опция)
