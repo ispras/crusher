@@ -1,46 +1,29 @@
 FROM ubuntu:22.04
 
-# Настройка окружения
+# 1. Настройка окружения
 ENV TZ=Europe/Moscow
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-ENV WORK_DIR=/root/fuzz/openssl
+ENV WORK_DIR=/root/fuzz/
 RUN mkdir -p $WORK_DIR
 WORKDIR $WORK_DIR
 
-# Установка зависимостей
-RUN apt update \
+# 2. Установка зависимостей
+RUN apt update -y \
     && apt upgrade -y \
     && apt install -y wget liblz4-dev libcurl4-openssl-dev gnupg2 git \
-       gcc gcc-multilib g++ g++-multilib clang llvm nano
-
-# Сборка компилятора для инструментации OpenSSL
-RUN apt install -y make llvm
-
-RUN git clone --depth 1 --branch v4.10c https://github.com/AFLplusplus/AFLplusplus \
-    && cd AFLplusplus \
-    && make -j
-
-# Сборка OpenSSL с инструментацией
-# sed -i "s/'File::Glob' => qw\/glob\/;/'File::Glob' => qw\/:glob\/;/" test/build.info
-RUN wget https://github.com/openssl/openssl/releases/download/OpenSSL_1_1_0a/openssl-1.1.0a.tar.gz \
-    && tar xvf openssl-1.1.0a.tar.gz \
-    && cd openssl-1.1.0a \
-    && sed -i "s/'File::Glob' => qw\/glob\/;/'File::Glob' => qw\/:glob\/;/" Configure \
-    && sed -i "s/'File::Glob' => qw\/glob\/;/'File::Glob' => qw\/:glob\/;/" test/build.info \
-    && export CC=$WORK_DIR/AFLplusplus/afl-clang-fast \
-    && ./config no-shared \
-    && make -j
+       gcc gcc-multilib g++ g++-multilib make nano libglib2.0-dev
+RUN apt install -y clang-14 llvm-14 aha lcov
+RUN update-alternatives --install /usr/bin/clang clang /usr/bin/clang-14 0 \
+        && update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-14 0 \
+        && update-alternatives --install /usr/bin/llvm-profdata llvm-profdata /usr/bin/llvm-profdata-14 0 \
+        && update-alternatives --install /usr/bin/llvm-cov llvm-cov /usr/bin/llvm-cov-14 0 \
+        && update-alternatives --install /usr/bin/llvm-config llvm-config /usr/bin/llvm-config-14 0
 
 # Создание SSL-сертификата и ключа
-RUN mkdir keys \
-    && $WORK_DIR/openssl-1.1.0a/apps/openssl req -newkey rsa:2048 -new -nodes -x509 -days 3650 -keyout keys/key.pem -out keys/cert.pem -batch -config openssl-1.1.0a/apps/openssl.cnf
+# RUN mkdir keys \
+#    && $WORK_DIR/openssl-1.1.0a/apps/openssl req -newkey rsa:2048 -new -nodes -x509 -days 3650 -keyout keys/key.pem -out keys/cert.pem -batch -config openssl-1.1.0a/apps/openssl.cnf
 
-# Компиляция разделяемой библиотеки для замены некоторых сетевых функций (для ускорения фаззинга)
-COPY custom_lib $WORK_DIR/custom_lib
-RUN cd custom_lib \
-    && make -j
-
-# Настройка лицензии
+# 4. Настройка лицензии
 RUN echo 'deb https://repo.ispras.ru/apt /' | tee /etc/apt/sources.list.d/ispras.list \
     && wget -q -O - https://repo.ispras.ru/apt/key.asc | apt-key add - \
     && apt update -y \

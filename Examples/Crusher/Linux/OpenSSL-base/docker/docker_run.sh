@@ -16,6 +16,6 @@ if [ ! -z "$2" ]; then
     hasp_ip_env="-e HASP_IP=$2"
 fi
 
-cmd="docker run --name openssl --rm --privileged --network host --cap-add=SYS_PTRACE --security-opt seccomp=unconfined -e LANG=C.UTF-8 -e LC_ALL=C.UTF-8 -w $test_dir -v $crusher_dir:/opt/crusher -v $test_dir:$test_dir $hasp_ip_env -ti openssl-circea:latest /bin/bash"
+cmd="docker run --name openssl-base --rm --privileged --network host -e LANG=C.UTF-8 -e LC_ALL=C.UTF-8 -w $test_dir -v $crusher_dir:/opt/crusher -v $test_dir:$test_dir $hasp_ip_env -ti openssl-fuzz:latest /bin/bash"
 echo "$cmd"
 $cmd

@@ -1,1 +1,5 @@
-$WORK_DIR/openssl-1.1.0a/apps/openssl s_server -cert $WORK_DIR/keys/cert.pem -key $WORK_DIR/keys/key.pem -accept 2000 -naccept 1
+#!/bin/bash
+
+work_dir=$(dirname $(realpath $0))
+
+$work_dir/server/openssl-fuzz s_server -cert $work_dir/server/keys/cert.pem -key $work_dir/server/keys/key.pem -tls1_2 -accept 2000 -naccept 1 -legacy_renegotiation

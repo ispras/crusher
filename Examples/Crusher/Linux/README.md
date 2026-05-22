@@ -1,28 +1,28 @@
 ## Набор примеров
-Набор примеров фаззинга на Linux, в которых демонстрируется часть функционала `Crusher`:
 
-1) [python](python) - фаззинг через файл;
-2) [jasper](jasper) - фаззинг через файл с использованием DSE (динамическое символьное выполнение);
-3) [faad](faad) - фаззинг через аргументы командной строки;
-4) [OpenSSL](OpenSSL) - фаззинг OpenSSL-сервера: Peach Pit + ISP_PRELOAD;
-5) [stm32](stm32) - фаззинг ПО устройства ARM (на основе частичной эмуляции с Lua-Qemu);
-6) [firmware_x86_32](firmware_x86_32) - фаззинг ПО устройства x86 (32-бит) (на основе частичной эмуляции с Lua-Qemu);
-7) [firmware_x86_64]( firmware_x86_64) - фаззинг ПО устройства x86 (64-бит) (на основе частичной эмуляции с Lua-Qemu);
-8) [fullsystem_emulation](fullsystem_emulation) - фаззинг с полносистемной эмуляцией х86 (64-бит) (на основе частичной эмуляции с Lua-Qemu);
-9) [qiling](qiling) - фаззинг с частичной эмуляцией с помощью Qiling;
-10) [unicorn](unicorn) - фаззинг с помощью эмулятора Unicorn;
-11) [partial_emulation](partial_emulation) - пример частичной эмуляции с помощью модуля DualEmu, комбинирующего фаззинг с помощью unicornafl и DSE с Angr;
-12) [java](java) - фаззинг Keycloak;
-13) [python_fuzz](python_fuzz) - фаззинг библиотеки на языке python;
-14) [c#](csharp) - фаззинг dll библиотек, написанных на C#, через файл и stdin;
-15) [nginx_docker](nginx_docker) - фаззинг сервера Nginx в Docker-режиме;
-16) [OpenSSL_mod_client](OpenSSL_mod_client) - фаззинг OpenSSL-сервера методом модифицированного клиента;
-17) [arm_rootfs_gzip](arm_rootfs_gzip) - фаззинг gzip из Ubuntu20 (ARM) с применением Qemu (user-mode);
-17) [pytorch](pytorch) - фаззинг python-модуля pytorch;
-18) [kern_netfilter](kern_netfilter) - фаззинг компонента ядра с использованием снимков памяти (снапшотов).
+Набор примеров фаззинга на Linux:
+
+1) [C: JasPer](JasPer) - фаззинг C-приложения с использованием DSE (динамическое символьное выполнение);
+2) [Java: Keycloak](Keycloak) - фаззинг ентерпрайз Java-приложения Keycloak;
+3) [Java (Spring Boot): PetClinic](spring_boot) - фаззинг Java-приложения Spring PetClinic;
+4) [Python: pdfquery](python_fuzz) - фаззинг Python-библиотеки pdfquery;
+5) [Python: pytorch](pytorch) - фаззинг Python-библиотеки pytorch;
+6) [C#: AngleSharp](csharp) - фаззинг C#-библиотеки AngleSharp;
+7) [User-mode emulation (x86_64): python](python) - фаззинг бинарного приложения python;
+8) [User-mode emulation (ARM): gzip](arm_rootfs_gzip) - фаззинг gzip из Ubuntu20 (ARM) с применением Qemu (user-mode);
+9) [Argv: faad](faad) - фаззинг faad через аргументы командной строки;
+10) [Network: OpenSSL](OpenSSL-base) - фаззинг OpenSSL-сервера: Peach Pit + ISP_PRELOAD;
+11) [Network (complex): OpenSSL](OpenSSL) - фаззинг OpenSSL: датчики состояний + метод модифицированного клиента с применением инструментирующего компилятора `ISP-Circea`;
+12) [Network + docker: Nginx](nginx_docker) - фаззинг сервера Nginx в Docker-режиме;
+13) [Partial emulation: GSM-модуль на STM32](GSM) - фаззинг GSM-модуля для микроконтроллера STM32 с помощью частичной эмуляции;
+14) [Partial emulation (qiling)](qiling) - фаззинг с частичной эмуляцией с помощью Qiling;
+15) [Partial emulation (unicorn)](unicorn) - фаззинг с помощью эмулятора Unicorn;
+16) [Partial emulation + DSE](partial_emulation) - пример частичной эмуляции с помощью модуля DualEmu, комбинирующего фаззинг с помощью unicornafl и DSE с Angr;
+17) [UEFI](UEFI) - несколько способов фаззинга UEFI;
+18) [Full-system emulation: netfilter (kernel module)](kern_netfilter) - фаззинг компонента ядра с использованием снимков памяти (снапшотов);
+19) [LLM: MuPDF](LLM_PDF) - фаззинг MuPDF с использованием LLM для генерации файлов PDF в пользовательской мутации. 
 
 Далее приведена последовательность действий по фаззингу, мониторингу и воспроизведению аварийных завершений (крешей) для следующих примеров: `python`, `jasper` и `faad`.
-
 
 Для остальных примеров подробные инструкции можно найти в файлах `README.md` в соответствующих директориях.
 

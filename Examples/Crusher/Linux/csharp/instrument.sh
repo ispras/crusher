@@ -1,11 +1,6 @@
 #!/bin/bash
 
-if [[ "$#" -ne 1 ]]; then
-    echo "Usage: ./instrument.sh </path/to/dotnet>"
-    exit 1
-fi
-
-DOTNET=$1
+DOTNET=/usr/bin/dotnet
 
 echo "installing SharpFuzz.CommandLine .NET tool..."
 

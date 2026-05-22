@@ -1,0 +1,31 @@
+{
+	"manager-options": {
+		"--dse-cores": 0,
+		"--wait-next-instance": 1000,
+		"-t": 400
+	},
+
+	"instance-options": {
+		"-I": "StaticForkSrv",
+		"--redirect-stdin-off": true,
+		"-T": "ModClient",
+		"--mod-client": "./plugins/client.py",
+		"--port": "__free_port",
+		"--delay": 20,
+		"--configurator-script": "./plugins/conf.py",
+                "--clean-binary": "./server/openssl-clean",
+		"--coverage-binary": "./server/openssl-cov",
+		"--coverage-mcdc-records": true,
+		"--ignore-hangs": true
+	},
+
+	"fuzz-options": {
+		"--eat-sync": true,
+		"--cal-cycles": 2
+	},
+
+	"eat-options": {
+		"--no-valgrind": true,
+		"--no-drmemory": true
+	}
+}
