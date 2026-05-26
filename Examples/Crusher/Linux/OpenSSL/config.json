@@ -13,7 +13,8 @@
 		"--port": "__free_port",
 		"--delay": 20,
 		"--configurator-script": "./plugins/conf.py",
-                "--clean-binary": "./server/openssl-clean",
+		"--environment-plugin": "./plugins/env.py",
+		"--clean-binary": "./server/openssl-clean",
 		"--coverage-binary": "./server/openssl-cov",
 		"--coverage-mcdc-records": true,
 		"--ignore-hangs": true
