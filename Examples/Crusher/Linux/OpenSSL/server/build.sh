@@ -15,12 +15,6 @@ CIRCEA_FLAGS="-circea-recursion \
               -circea-send \
               -circea-array-indexing" 
 
-git clone --depth 1 --branch v4.21c https://github.com/AFLplusplus/AFLplusplus
-cd AFLplusplus
-CC=$CIRCEA_CC CXX=$CIRCEA_CXX LLVM_CONFIG=$CIRCEA_LLVM_CONFIG make -j8
-make install
-cd ..
-
 # 2. Скачать исходники OpenSSL
 
 git clone https://github.com/openssl/openssl
@@ -36,21 +30,21 @@ git apply $server_dir/server.patch
 ## 4.1. Основная сборка (с битовой картой покрытия)
 
 make clean && make distclean || echo "skip errors"
-CC=afl-clang-fast CFLAGS="$CIRCEA_FLAGS" ./config no-shared no-tests
+CC=$CIRCEA_CC CFLAGS="$CIRCEA_FLAGS" ./config no-shared no-tests
 make -j8
 cp apps/openssl ../openssl-fuzz || exit 1
 
 ## 4.2. ASan-сборка
 
 make clean && make distclean || echo "skip errors"
-CC=afl-clang-fast CFLAGS="$CIRCEA_FLAGS" ./config no-shared no-tests enable-asan
+CC=$CIRCEA_CC CFLAGS="$CIRCEA_FLAGS" ./config no-shared no-tests enable-asan
 make -j8
 cp apps/openssl ../openssl-fuzz-asan
 
 ## 4.3. MSan-сборка
 
 make clean && make distclean || echo "skip errors"
-CC=afl-clang-fast CFLAGS="$CIRCEA_FLAGS" ./config no-shared no-tests enable-msan
+CC=$CIRCEA_CC CFLAGS="$CIRCEA_FLAGS" ./config no-shared no-tests enable-msan
 make -j8
 cp apps/openssl ../openssl-fuzz-msan
 
@@ -58,7 +52,9 @@ cp apps/openssl ../openssl-fuzz-msan
 
 COV_FLAGS="-fprofile-instr-generate \
            -fcoverage-mapping \
-           -fcoverage-mcdc"
+           -fcoverage-mcdc \
+           -circea-no-afl-pass \
+           -circea-no-forkserver-rt"
 
 make clean && make distclean || echo "skip errors"
 CC=$CIRCEA_CC CFLAGS=$COV_FLAGS LDFLAGS=$COV_FLAGS ./config no-shared no-tests

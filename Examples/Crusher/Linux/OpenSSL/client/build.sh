@@ -18,13 +18,14 @@ git apply $client_dir/client.patch
 
 CIRCEA_CC="/opt/crusher/circea/bin/clang"
 CIRCEA_CXX="/opt/crusher/circea/bin/clang++"
-CIRCEA_LLVM_CONFIG="/opt/crusher/circea/bin/llvm-config"
 
 CIRCEA_MOD_CLIENT_FLAGS="-circea-forkserver-into-client \
-                         -circea-state-var-mutate" 
+                         -circea-state-var-mutate \
+                         -circea-no-forkserver-rt \
+                         -circea-no-afl-pass"
 
 make clean && make distclean || echo "skip errors"
-CC=$CIRCEA_CC CXX=$CIRCEA_CXX LLVM_CONFIG=$CIRCEA_LLVM_CONFIG LD=$CIRCEA_CC CFLAGS="$CIRCEA_MOD_CLIENT_FLAGS" LDFLAGS="$CIRCEA_MOD_CLIENT_FLAGS" ./config no-shared no-tests
+CC=$CIRCEA_CC CXX=$CIRCEA_CXX LD=$CIRCEA_CC CFLAGS="$CIRCEA_MOD_CLIENT_FLAGS" LDFLAGS="$CIRCEA_MOD_CLIENT_FLAGS" ./config no-shared no-tests
 make -j8
 cp apps/openssl ../openssl-clean
 
