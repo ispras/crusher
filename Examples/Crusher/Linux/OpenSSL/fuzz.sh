@@ -4,7 +4,7 @@ CRUSHER_DIR=/opt/crusher
 
 echo core >/proc/sys/kernel/core_pattern
 
-$CRUSHER_DIR/bin_x86-64/fuzz_manager --start 20 --eat-cores 2 \
+$CRUSHER_DIR/bin_x86-64/fuzz_manager --start 6 --eat-cores 2 \
       --config-file config.json --port __free_port \
       -i in -o out -F \
       --delay 100 --timeout 250 \
