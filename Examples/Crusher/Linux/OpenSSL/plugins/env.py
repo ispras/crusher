@@ -25,7 +25,7 @@ def init(json_options):
     return True
 
 def setup():
-    if random.randint(0, 1000) == 0: clean()
+    if random.randint(0, 10000) == 0: clean()
     return True
 
 def teardown():
