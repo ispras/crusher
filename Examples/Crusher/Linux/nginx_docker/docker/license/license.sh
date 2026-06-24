@@ -1,5 +1,9 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-/usr/sbin/hasplmd -s
+/usr/sbin/hasplmd_x86_64 -s
 
-echo core >/proc/sys/kernel/core_pattern
+sleep 5
+
+# sudo su - keycloak
+
+#echo core >/proc/sys/kernel/core_pattern
