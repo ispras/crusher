@@ -1,0 +1,21 @@
+{
+	"manager-options": {
+		"--wait-next-instance": 500,
+		"-t": 500
+	},
+
+	"instance-options": {
+		"-T": "NetworkTcp",
+		"--ip": "127.0.0.1",
+		"--port": "80",
+		"--delay": 100,
+                "-I": "StaticForkSrv",
+                "--bitmap-size": 65536,
+		"--clean-binary": "/root/fuzz/nginx-clean/sbin/nginx",
+	        "--coverage-binary": "/root/fuzz/nginx-cov/sbin/nginx"
+	},
+
+	"fuzz-options": {
+		"--eat-sync": true
+	}
+}
