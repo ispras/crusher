@@ -38,12 +38,6 @@ RUN CC=afl-clang-fast ./auto/configure --prefix=$PWD/../nginx-fuzz --with-select
 RUN make install -j
 RUN make clean
 
-# Build cov binary
-RUN --mount=type=bind,from=circea,source=./,target=/opt/circea,ro \
-    CC=/opt/circea/bin/clang ./auto/configure --prefix=$PWD/../nginx-cov --with-select_module --with-cc-opt="-fprofile-instr-generate -fcoverage-mapping" --with-ld-opt="-fprofile-instr-generate -fcoverage-mapping" \
-    && make install -j \
-    && make clean
-
 # Setup license
 ARG HASP_IP
 ENV HASP_IP=$HASP_IP
@@ -59,4 +53,8 @@ RUN echo "/opt/setup_license.sh 101213 36343" >> ~/.bashrc
 COPY license/test-protected /tmp/test-protected
 RUN /opt/setup_license.sh 101213 36343 && /tmp/test-protected
 
-
+# Build cov binary
+RUN --mount=type=bind,from=circea,source=./,target=/opt/circea,ro \
+    CC=/opt/circea/bin/clang ./auto/configure --prefix=$PWD/../nginx-cov --with-select_module --with-cc-opt="-fprofile-instr-generate -fcoverage-mapping" --with-ld-opt="-fprofile-instr-generate -fcoverage-mapping" \
+    && make install -j \
+    && make clean
