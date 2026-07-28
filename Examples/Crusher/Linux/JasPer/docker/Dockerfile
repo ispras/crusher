@@ -51,11 +51,11 @@ RUN cd jasper-1.900.1 \
     && make distclean
 
 ## cov binary
+ENV COV_FLAGS="-fprofile-instr-generate -fcoverage-mapping"
+
 RUN cd jasper-1.900.1 \
     && CC=clang CXX=clang++ \
-       CFLAGS="-O0 -g -fprofile-instr-generate -fcoverage-mapping" \
-       CXXFLAGS="-O0 -g -fprofile-instr-generate -fcoverage-mapping" \
-       LDFLAGS="-fprofile-instr-generate -fcoverage-mapping" \
+       CFLAGS="-O0 -g $COV_FLAGS" CXXFLAGS="-O0 -g $COV_FLAGS" LDFLAGS=$COV_FLAGS \
        ./configure --prefix $PWD/../jasper-cov \
     && make install -j$(nproc) \
     && make distclean
