@@ -18,7 +18,7 @@ RUN update-alternatives --install /usr/bin/clang clang /usr/bin/clang-14 0 \
     && update-alternatives --install /usr/bin/llvm-cov llvm-cov /usr/bin/llvm-cov-14 0 \
     && update-alternatives --install /usr/bin/llvm-config llvm-config /usr/bin/llvm-config-14 0
     
-RUN wget -O- https://download.oracle.com/java/21/latest/jdk-21_linux-x64_bin.deb -O /tmp/jdk21.deb \
+RUN wget -O /tmp/jdk21.deb https://download.oracle.com/java/21/archive/jdk-21.0.12.1_linux-x64_bin.deb \
     && apt-get install -y /tmp/jdk21.deb \
     && rm -f /tmp/jdk21.deb \
     && rm -rf /var/lib/apt/lists/*
